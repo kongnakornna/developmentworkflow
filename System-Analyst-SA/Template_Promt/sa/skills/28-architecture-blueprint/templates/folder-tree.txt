@@ -1,0 +1,28 @@
+project-root/
+├── docs/
+│   ├── domain-map.md
+│   ├── dependency-graph.md
+│   ├── ubiquitous-language.md
+│   └── adr/
+├── src/
+│   ├── shared/{kernel,contracts,infra}/
+│   ├── modules/
+│   │   └── [module]/
+│   │       ├── README.md
+│   │       ├── domain/{entities,value-objects,aggregates,events,repositories,services}/
+│   │       ├── application/{use-cases,dto,ports}/
+│   │       ├── infrastructure/{persistence,messaging,external}/
+│   │       ├── presentation/{http,cli}/
+│   │       ├── public/index.ts
+│   │       └── tests/{unit,integration,e2e}/
+│   └── apps/{api,worker,web}/
+├── libs/
+├── scripts/
+│   ├── gen_module.py              ⭐ Primary
+│   ├── gen-module.sh
+│   ├── gen-module.ps1
+│   ├── gen-module.bat
+│   ├── check_deps.py
+│   ├── check-deps.ts
+│   └── check-boundaries.ts
+└── tests/{contract,e2e}/

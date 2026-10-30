@@ -1,0 +1,8 @@
+**SOLID Principles:**
+| หลักการ | ชื่อเต็ม | ความหมาย |
+|---------|----------|----------|
+| **S** | Single Responsibility | 1 Class = 1 หน้าที่ |
+| **O** | Open/Closed | เปิดให้ขยาย ปิดให้แก้ไข |
+| **L** | Liskov Substitution | Subclass แทน Superclass ได้ |
+| **I** | Interface Segregation | Interface เล็กดีกว่าใหญ่ |
+| **D** | Dependency Inversion | ขึ้นกับ Abstraction ไม่ใช่ Concrete |

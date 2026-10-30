@@ -1,0 +1,24 @@
+---
+name: design
+description: ออกแบบด้วย Design Thinking — Use when user wants to design a product/service/experience using Design Thinking.
+---
+
+# ออกแบบ (โมดูล 11)
+
+## Prompt Template
+ออกแบบ **[สิ่งของ/ระบบ/บริการ/ประสบการณ์]** สำหรับ **[ผู้ใช้]**
+
+ใช้กระบวนการ Design Thinking 5 ขั้น:
+1. Empathize
+2. Define
+3. Ideate
+4. Prototype
+5. Test
+
+## ผลลัพธ์
+- Insight ผู้ใช้
+- Problem Statement
+- ไอเดีย 10 ข้อ
+- Prototype อย่างง่าย
+- แผนทดสอบ
+- ตัวชี้วัดความสำเร็จ

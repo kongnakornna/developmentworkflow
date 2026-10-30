@@ -1,0 +1,2850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS-EC2-S3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/styles/github.min.css">
+<style>
+
+/* Base */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #24292e;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.markdown-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 32px 64px;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #24292e;
+}
+
+h1 {
+  font-size: 1.8em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h2 {
+  font-size: 1.5em;
+  letter-spacing: -0.01em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h3 { font-size: 1.25em; }
+h4 { font-size: 1.1em; }
+h5 { font-size: 1em; }
+
+h6 {
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #656d76;
+}
+
+/* Paragraphs */
+p {
+  margin: 16px 0;
+}
+
+/* Inline */
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+del {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+code {
+  font-family: "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9em;
+  background-color: #eff1f3;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #24292e;
+}
+
+a {
+  color: #0969da;
+  text-decoration: underline;
+  text-decoration-skip-ink: auto;
+  text-underline-offset: 3px;
+}
+
+a:hover { opacity: 0.8; }
+
+/* Blockquotes */
+blockquote {
+  margin: 16px 0;
+  padding: 0 1em;
+  border-left: 3px solid #d0d7de;
+  color: #656d76;
+}
+
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Lists */
+ul, ol {
+  padding-left: 2em;
+  margin: 16px 0;
+}
+
+li { margin: 4px 0; }
+ul ul, ul ol, ol ul, ol ol { margin: 0; }
+li > p { margin: 0; }
+
+input[type="checkbox"] {
+  margin-right: 0.5em;
+  accent-color: #0969da;
+}
+
+/* Code Blocks */
+pre {
+  background-color: #f6f8fa;
+  padding: 16px;
+  border-radius: 6px;
+  overflow: auto;
+  font-family: "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9em;
+  line-height: 1.45;
+  margin: 16px 0;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  display: block;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  margin: 16px 0;
+  width: auto;
+  max-width: 100%;
+  overflow: auto;
+  display: block;
+}
+
+th, td {
+  padding: 8px 12px;
+  border: 1px solid #d0d7de;
+  text-align: left;
+}
+
+th {
+  font-weight: 600;
+  background-color: #f6f8fa;
+}
+
+tr:nth-child(even) td {
+  background-color: #f6f8fa;
+}
+
+/* Horizontal Rule */
+hr {
+  border: none;
+  border-top: 1px solid #d0d7de;
+  margin: 24px 0;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Math (KaTeX MathML) */
+.math-block {
+  display: block;
+  text-align: center;
+  margin: 16px 0;
+  padding: 8px 0;
+  overflow-x: auto;
+}
+
+.math-inline {
+  display: inline;
+}
+
+.math-error {
+  color: #cf222e;
+  background-color: rgba(207, 34, 46, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+/* Mermaid */
+pre.mermaid {
+  background-color: transparent;
+  text-align: center;
+  border: none;
+  padding: 16px 0;
+}
+
+/* Footnotes */
+.footnotes-section {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid #d0d7de;
+  font-size: 0.9em;
+  color: #656d76;
+}
+
+.footnotes-section ol {
+  padding-left: 1.5em;
+}
+
+.footnotes-section li {
+  margin: 8px 0;
+}
+
+sup.footnote-ref a {
+  color: #0969da;
+  text-decoration: none;
+  font-size: 0.85em;
+  padding: 0 2px;
+}
+
+sup.footnote-ref a:hover {
+  text-decoration: underline;
+}
+
+a.footnote-backref {
+  color: #0969da;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+/* Details/Summary */
+details {
+  margin: 8px 0;
+  border-left: 2px solid rgba(128, 128, 128, 0.3);
+  padding-left: 12px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 4px 0;
+  color: #24292e;
+}
+
+summary:hover {
+  color: #0969da;
+}
+
+/* Print */
+@media print {
+  body { background: white; }
+  .markdown-body { max-width: none; padding: 0; }
+  pre { white-space: pre-wrap; word-wrap: break-word; }
+  a { color: #24292e; text-decoration: underline; }
+  pre.mermaid { page-break-inside: avoid; }
+}
+
+</style>
+</head>
+<body>
+<div class="markdown-body">
+<h1>คู่มือ AWS เชิงลึก: IAM, EC2, S3 และระบบ Monitoring พร้อม Notification</h1>
+<hr>
+<h2>📌 สารบัญ</h2>
+<ul>
+<li><a href="#%E0%B8%9A%E0%B8%97%E0%B8%97%E0%B8%B5%E0%B9%88-1-aws-identity-and-access-management-iam">บทที่ 1: AWS Identity and Access Management (IAM)</a></li>
+<li><a href="#%E0%B8%9A%E0%B8%97%E0%B8%97%E0%B8%B5%E0%B9%88-2-aws-elastic-compute-cloud-ec2">บทที่ 2: AWS Elastic Compute Cloud (EC2)</a></li>
+<li><a href="#%E0%B8%9A%E0%B8%97%E0%B8%97%E0%B8%B5%E0%B9%88-3-aws-simple-storage-service-s3">บทที่ 3: AWS Simple Storage Service (S3)</a></li>
+<li><a href="#%E0%B8%9A%E0%B8%97%E0%B8%97%E0%B8%B5%E0%B9%88-4-%E0%B8%A3%E0%B8%B0%E0%B8%9A%E0%B8%9A-monitoring-%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-grafana-%E0%B9%81%E0%B8%A5%E0%B8%B0-notification-%E0%B8%9C%E0%B9%88%E0%B8%B2%E0%B8%99-email-%E0%B9%81%E0%B8%A5%E0%B8%B0-microsoft-teams">บทที่ 4: ระบบ Monitoring ด้วย Grafana และ Notification ผ่าน Email และ Microsoft Teams</a></li>
+</ul>
+<hr>
+<h1>บทที่ 1: AWS Identity and Access Management (IAM)</h1>
+<h2>สรุปสั้นก่อนเข้าเนื้อหา</h2>
+<blockquote>
+<p><strong>IAM</strong> คือระบบจัดการสิทธิ์การเข้าถึงบริการ AWS แบบละเอียด (Fine-grained access control) ช่วยกำหนดว่า &quot;ใคร&quot; เข้าถึง &quot;อะไร&quot; ได้ &quot;อย่างไร&quot; บน AWS Cloud</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>คำตอบ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>คืออะไร</strong></td>
+<td>บริการจัดการ Identities (ผู้ใช้/กลุ่ม/บทบาท) และ Permissions (นโยบาย)</td>
+</tr>
+<tr>
+<td><strong>มีกี่แบบ</strong></td>
+<td>Users, Groups, Roles, Policies</td>
+</tr>
+<tr>
+<td><strong>ใช้อย่างไร</strong></td>
+<td>กำหนด Policy JSON ระบุ Effect, Action, Resource</td>
+</tr>
+<tr>
+<td><strong>ทำไมต้องใช้</strong></td>
+<td>เพื่อความปลอดภัย ตามหลัก Least Privilege</td>
+</tr>
+<tr>
+<td><strong>ประโยชน์</strong></td>
+<td>จัดการสิทธิ์แบบละเอียด, รวมศูนย์, Audit ได้</td>
+</tr>
+<tr>
+<td><strong>ข้อควรระวัง</strong></td>
+<td>Root user ควรมี MFA และไม่ใช้</td>
+</tr>
+<tr>
+<td><strong>ข้อดี</strong></td>
+<td>ยืดหยุ่น, ปลอดภัยสูง, ทำงานร่วมกับบริการ AWS อื่นได้</td>
+</tr>
+<tr>
+<td><strong>ข้อเสีย</strong></td>
+<td>ซับซ้อนเมื่อมี Policy จำนวนมาก</td>
+</tr>
+<tr>
+<td><strong>ข้อห้าม</strong></td>
+<td>ห้ามแชร์ Access Key, ห้ามใส่ Secret Key ในโค้ด</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>วัตถุประสงค์ (แบบสั้นสำหรับทบทวน)</h2>
+<p>เพื่อให้ผู้อ่านสามารถ:</p>
+<ol>
+<li>เข้าใจหลักการทำงานของ IAM</li>
+<li>ออกแบบและสร้าง Users, Groups, Roles และ Policies</li>
+<li>กำหนดสิทธิ์การเข้าถึง AWS services อย่างปลอดภัย</li>
+<li>นำไปประยุกต์ใช้ในองค์กรจริง</li>
+</ol>
+<h2>กลุ่มเป้าหมาย</h2>
+<ul>
+<li>ผู้ดูแลระบบ Cloud (Cloud Admin/SysOps)</li>
+<li>Developer ที่ต้องเขียนโค้ดเรียกใช้ AWS API</li>
+<li>Security Engineer</li>
+<li>DevOps Engineer</li>
+</ul>
+<h2>ความรู้พื้นฐาน</h2>
+<ul>
+<li>ความเข้าใจพื้นฐานเกี่ยวกับ Cloud Computing</li>
+<li>เคยใช้งาน AWS Management Console มาก่อน (ไม่จำเป็นต้องลึก)</li>
+<li>เข้าใจ JSON พื้นฐาน</li>
+</ul>
+<hr>
+<h2>บทนำ</h2>
+<p>เมื่อองค์กรเริ่มใช้งาน AWS สิ่งแรกที่ต้องคำนึงถึงคือ <strong>ความปลอดภัยในการเข้าถึง</strong> IAM เป็นหัวใจสำคัญของความปลอดภัยบน AWS ช่วยให้คุณสามารถควบคุมการเข้าถึงทรัพยากรต่างๆ ได้อย่างละเอียด ตั้งแต่ระดับสูงสุดจนถึงระดับการทำงานเฉพาะเจาะจง</p>
+<h2>บทนิยาม</h2>
+<table>
+<thead>
+<tr>
+<th>ศัพท์เทคนิค</th>
+<th>คำอธิบาย</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>IAM User</strong></td>
+<td>ตัวตนของบุคคลหรือแอปพลิเคชันหนึ่งๆ มี credentials เฉพาะ</td>
+</tr>
+<tr>
+<td><strong>IAM Group</strong></td>
+<td>กลุ่มของ Users ที่มีสิทธิ์เหมือนกัน</td>
+</tr>
+<tr>
+<td><strong>IAM Role</strong></td>
+<td>บทบาทที่สามารถ assume เพื่อขอสิทธิ์ชั่วคราว ไม่มี long-term credentials</td>
+</tr>
+<tr>
+<td><strong>IAM Policy</strong></td>
+<td>เอกสาร JSON ที่กำหนด permissions</td>
+</tr>
+<tr>
+<td><strong>Root User</strong></td>
+<td>ผู้ใช้แรกเริ่มของ AWS Account มีสิทธิ์เต็มรูปแบบ</td>
+</tr>
+<tr>
+<td><strong>MFA</strong></td>
+<td>Multi-Factor Authentication เพิ่มความปลอดภัยอีกชั้น</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>ออกแบบ Workflow</h2>
+<h3>รูปแบบ Dataflow Diagram (Mermaid)</h3>
+<pre><code class="language-mermaid">flowchart TB
+    subgraph &quot;Identity Sources&quot;
+        A[AWS User&lt;br/&gt;Human]
+        B[Application&lt;br/&gt;Service]
+        C[Federated Identity&lt;br/&gt;SAML/AD]
+    end
+
+    subgraph &quot;IAM Core&quot;
+        D[IAM User&lt;br/&gt;+ Access Keys]
+        E[IAM Group&lt;br/&gt;Permission Set]
+        F[IAM Role&lt;br/&gt;Temporary Credentials]
+        G[IAM Policy&lt;br/&gt;JSON Document]
+    end
+
+    subgraph &quot;Authentication&quot;
+        H[Sign-in&lt;br/&gt;Console/CLI/SDK]
+        I{MFA&lt;br/&gt;Required?}
+    end
+
+    subgraph &quot;Authorization&quot;
+        J[Policy Evaluation&lt;br/&gt;Engine]
+        K{Allow or Deny?}
+    end
+
+    subgraph &quot;AWS Resources&quot;
+        L[EC2 Instances]
+        M[S3 Buckets]
+        N[RDS Databases]
+        O[Other Services]
+    end
+
+    A --&gt; D
+    B --&gt; D
+    C --&gt; F
+    D --&gt; E
+    E --&gt; G
+    F --&gt; G
+    D --&gt; H
+    F --&gt; H
+    H --&gt; I
+    I -- Yes --&gt; J
+    I -- No --&gt; J
+    J --&gt; K
+    K -- Allow --&gt; L
+    K -- Allow --&gt; M
+    K -- Allow --&gt; N
+    K -- Allow --&gt; O
+    K -- Deny --&gt; H
+</code></pre>
+<h3>คำอธิบาย Dataflow อย่างละเอียด</h3>
+<p><strong>ขั้นตอนที่ 1: การสร้าง Identity (ตัวตน)</strong></p>
+<ul>
+<li><strong>IAM User</strong>: สร้างสำหรับบุคคลหรือแอปพลิเคชันที่ต้องเข้าถึง AWS แบบถาวร</li>
+<li><strong>IAM Group</strong>: จัดกลุ่ม Users ที่มีหน้าที่คล้ายกัน เช่น Developers, Admins</li>
+<li><strong>IAM Role</strong>: สำหรับกรณีที่ต้องการสิทธิ์ชั่วคราว เช่น EC2 instance ที่ต้องเรียกใช้ S3</li>
+</ul>
+<p><strong>ขั้นตอนที่ 2: การกำหนดสิทธิ์ผ่าน Policy</strong></p>
+<ul>
+<li>สร้าง Policy JSON ที่ระบุ Actions (เช่น <code>s3:GetObject</code>) และ Resources (เช่น <code>arn:aws:s3:::my-bucket/*</code>)</li>
+<li>Attach Policy เข้ากับ User, Group หรือ Role</li>
+</ul>
+<p><strong>ขั้นตอนที่ 3: การ Authentication (พิสูจน์ตัวตน)</strong></p>
+<ul>
+<li>User ใช้ Username/Password สำหรับ Console หรือ Access Key สำหรับ CLI/SDK</li>
+<li>หากเปิด MFA จะต้องระบุ OTP เพิ่มเติม</li>
+</ul>
+<p><strong>ขั้นตอนที่ 4: การ Authorization (ตรวจสอบสิทธิ์)</strong></p>
+<ul>
+<li>AWS Policy Evaluation Engine จะตรวจสอบทุก Request</li>
+<li>ลำดับการตรวจสอบ: <strong>Deny → Allow</strong> (ถ้ามี Deny ใดๆ จะ Deny ทันที)</li>
+</ul>
+<hr>
+<h2>ตัวอย่างโค้ดที่รันได้จริง</h2>
+<h3>ตัวอย่างที่ 1: สร้าง IAM User และ Attach Policy ด้วย AWS CLI</h3>
+<pre><code class="language-bash"># 1. สร้าง IAM User ชื่อ &#39;developer-john&#39;
+# 1. Create IAM User named &#39;developer-john&#39;
+aws iam create-user --user-name developer-john
+
+# 2. สร้าง Access Key สำหรับ User นี้
+# 2. Create Access Key for this user
+aws iam create-access-key --user-name developer-john
+
+# 3. สร้าง Group ชื่อ &#39;developers&#39;
+# 3. Create Group named &#39;developers&#39;
+aws iam create-group --group-name developers
+
+# 4. เพิ่ม User เข้า Group
+# 4. Add user to group
+aws iam add-user-to-group --user-name developer-john --group-name developers
+
+# 5. Attach Managed Policy ให้ Group
+# 5. Attach Managed Policy to group
+aws iam attach-group-policy --group-name developers --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+
+# 6. ตรวจสอบว่า User มีสิทธิ์อะไรบ้าง
+# 6. Verify what permissions the user has
+aws iam list-attached-group-policies --group-name developers
+</code></pre>
+<h3>ตัวอย่างที่ 2: IAM Policy JSON (Read-only S3 บาง bucket)</h3>
+<pre><code class="language-json">{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;AllowReadOnlySpecificBucket&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Action&quot;: [
+                &quot;s3:GetObject&quot;,
+                &quot;s3:ListBucket&quot;
+            ],
+            &quot;Resource&quot;: [
+                &quot;arn:aws:s3:::my-company-data-bucket&quot;,
+                &quot;arn:aws:s3:::my-company-data-bucket/*&quot;
+            ]
+        },
+        {
+            &quot;Sid&quot;: &quot;DenyDeleteActions&quot;,
+            &quot;Effect&quot;: &quot;Deny&quot;,
+            &quot;Action&quot;: [
+                &quot;s3:DeleteObject&quot;,
+                &quot;s3:DeleteBucket&quot;
+            ],
+            &quot;Resource&quot;: &quot;*&quot;
+        }
+    ]
+}
+</code></pre>
+<h3>ตัวอย่างที่ 3: สร้าง IAM Role สำหรับ EC2 (Assume Role Policy)</h3>
+<pre><code class="language-json">// trust-policy.json - กำหนดว่าใครสามารถ Assume Role นี้ได้
+// trust-policy.json - Defines who can assume this role
+{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Principal&quot;: {
+                &quot;Service&quot;: &quot;ec2.amazonaws.com&quot;
+            },
+            &quot;Action&quot;: &quot;sts:AssumeRole&quot;
+        }
+    ]
+}
+</code></pre>
+<pre><code class="language-bash"># สร้าง Role ชื่อ &#39;ec2-s3-access-role&#39; พร้อม Trust Policy
+# Create Role named &#39;ec2-s3-access-role&#39; with Trust Policy
+aws iam create-role \
+    --role-name ec2-s3-access-role \
+    --assume-role-policy-document file://trust-policy.json
+
+# Attach S3 ReadOnly Policy ให้ Role
+# Attach S3 ReadOnly Policy to Role
+aws iam attach-role-policy \
+    --role-name ec2-s3-access-role \
+    --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+</code></pre>
+<h3>ตัวอย่างที่ 4: Python Boto3 - สร้าง User และ Policy</h3>
+<pre><code class="language-python">import boto3
+import json
+
+# สร้าง IAM client
+# Create IAM client
+iam_client = boto3.client(&#39;iam&#39;)
+
+# 1. สร้าง IAM User
+# 1. Create IAM User
+user_response = iam_client.create_user(
+    UserName=&#39;automation-user&#39;,
+    Tags=[
+        {&#39;Key&#39;: &#39;Environment&#39;, &#39;Value&#39;: &#39;Production&#39;},
+        {&#39;Key&#39;: &#39;CreatedBy&#39;, &#39;Value&#39;: &#39;Automation&#39;}
+    ]
+)
+print(f&quot;✅ สร้าง User สำเร็จ: {user_response[&#39;User&#39;][&#39;Arn&#39;]}&quot;)
+# Output: ✅ User created successfully: arn:aws:iam::123456789012:user/automation-user
+
+# 2. สร้าง Inline Policy (Policy ที่ผูกโดยตรงกับ User)
+# 2. Create Inline Policy (Policy directly attached to User)
+inline_policy = {
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Action&quot;: [
+                &quot;ec2:DescribeInstances&quot;,
+                &quot;ec2:StartInstances&quot;,
+                &quot;ec2:StopInstances&quot;
+            ],
+            &quot;Resource&quot;: &quot;*&quot;
+        }
+    ]
+}
+
+iam_client.put_user_policy(
+    UserName=&#39;automation-user&#39;,
+    PolicyName=&#39;ec2-control-policy&#39;,
+    PolicyDocument=json.dumps(inline_policy)
+)
+print(&quot;✅ Attach Inline Policy สำเร็จ&quot;)
+# Output: ✅ Inline Policy attached successfully
+
+# 3. สร้าง Access Key
+# 3. Create Access Key
+key_response = iam_client.create_access_key(
+    UserName=&#39;automation-user&#39;
+)
+print(f&quot;🔑 Access Key ID: {key_response[&#39;AccessKey&#39;][&#39;AccessKeyId&#39;]}&quot;)
+print(&quot;⚠️ เก็บ Secret Access Key ไว้ในที่ปลอดภัย&quot;)
+# ⚠️ Store Secret Access Key in a safe place
+</code></pre>
+<h3>ตัวอย่างที่ 5: ตรวจสอบสิทธิ์ด้วย IAM Policy Simulator</h3>
+<pre><code class="language-python">import boto3
+
+iam_client = boto3.client(&#39;iam&#39;)
+
+# ทดสอบว่า User &#39;developer-john&#39; สามารถเรียก s3:GetObject ได้หรือไม่
+# Test if user &#39;developer-john&#39; can call s3:GetObject
+response = iam_client.simulate_principal_policy(
+    PolicySourceArn=&#39;arn:aws:iam::123456789012:user/developer-john&#39;,
+    ActionNames=[&#39;s3:GetObject&#39;],
+    ResourceArns=[&#39;arn:aws:s3:::my-bucket/test.txt&#39;]
+)
+
+if response[&#39;EvaluationResults&#39;][0][&#39;EvalDecision&#39;] == &#39;allowed&#39;:
+    print(&quot;✅ User มีสิทธิ์อ่าน object นี้&quot;)
+    # ✅ User has permission to read this object
+else:
+    print(&quot;❌ User ไม่มีสิทธิ์&quot;)
+    # ❌ User does not have permission
+</code></pre>
+<hr>
+<h2>ตารางสรุปเปรียบเทียบ IAM Components</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>มี Credentials แบบถาวร</th>
+<th>ใช้สำหรับ</th>
+<th>ระยะเวลา</th>
+<th>เหมาะกับกรณี</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>IAM User</strong></td>
+<td>✅ Yes</td>
+<td>บุคคล/แอปพลิเคชัน</td>
+<td>ถาวร</td>
+<td>Developer, Admin, Service Account</td>
+</tr>
+<tr>
+<td><strong>IAM Group</strong></td>
+<td>❌ No</td>
+<td>จัดกลุ่ม User</td>
+<td>ถาวร</td>
+<td>จัดการสิทธิ์รวมหมู่</td>
+</tr>
+<tr>
+<td><strong>IAM Role</strong></td>
+<td>❌ No (STS temporary)</td>
+<td>บริการ/บุคคลภายนอก</td>
+<td>ชั่วคราว</td>
+<td>EC2, Lambda, Federation</td>
+</tr>
+<tr>
+<td><strong>IAM Policy</strong></td>
+<td>❌ No</td>
+<td>กำหนดสิทธิ์</td>
+<td>ถาวร</td>
+<td>Attach กับ User/Group/Role</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>แบบฝึกหัดท้ายบท</h2>
+<ol>
+<li>จงอธิบายความแตกต่างระหว่าง IAM User และ IAM Role</li>
+<li>จงเขียน Policy JSON ที่อนุญาตให้อ่านไฟล์จาก S3 bucket ชื่อ <code>my-logs</code> เท่านั้น (ห้ามเขียนหรือลบ)</li>
+<li>จงเขียนคำสั่ง AWS CLI เพื่อสร้าง IAM Group ชื่อ <code>readonly-group</code> และ Attach Policy <code>ReadOnlyAccess</code></li>
+<li>จงอธิบายหลักการ &quot;Least Privilege&quot; และยกตัวอย่างการนำไปใช้</li>
+<li>จงเขียน Python Boto3 เพื่อลบ IAM User ชื่อ <code>old-user</code></li>
+<li>จงอธิบายว่าทำไมไม่ควรใช้ Root User ในการทำงานประจำวัน</li>
+<li>จงเขียน Assume Role Policy ที่อนุญาตให้ Lambda Service Assume Role ได้</li>
+<li>จงอธิบายความสำคัญของ MFA และวิธีการเปิดใช้งาน</li>
+<li>จงเขียน CLI เพื่อสร้าง Access Key และลบ Access Key เดิม</li>
+<li>จงอธิบายลำดับการประเมิน Policy (Deny → Allow)</li>
+</ol>
+<h2>เฉลยแบบฝึกหัด</h2>
+<ol>
+<li><strong>IAM User</strong> มี credentials ถาวร เหมาะกับบุคคลหรือแอปฯ ที่ต้องเข้าถึงบ่อย <strong>IAM Role</strong> ใช้สิทธิ์ชั่วคราวผ่าน STS เหมาะกับ service หรือ federation</li>
+<li></li>
+</ol>
+<pre><code class="language-json">{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [{
+        &quot;Effect&quot;: &quot;Allow&quot;,
+        &quot;Action&quot;: [&quot;s3:GetObject&quot;],
+        &quot;Resource&quot;: &quot;arn:aws:s3:::my-logs/*&quot;
+    }]
+}
+</code></pre>
+<ol start="3">
+<li><code>aws iam create-group --group-name readonly-group</code> แล้ว <code>aws iam attach-group-policy --group-name readonly-group --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess</code></li>
+<li>Least Privilege = ให้สิทธิ์เท่าที่จำเป็นเท่านั้น เช่น Developer ควรมีสิทธิ์แค่ Read S3 ไม่ต้องมี Write</li>
+<li></li>
+</ol>
+<pre><code class="language-python">import boto3
+iam = boto3.client(&#39;iam&#39;)
+iam.delete_user(UserName=&#39;old-user&#39;)
+</code></pre>
+<ol start="6">
+<li>Root User มีสิทธิ์เต็มรูปแบบ ไม่มีข้อจำกัด หากถูกโจมตีจะเกิดความเสียหายรุนแรง</li>
+<li></li>
+</ol>
+<pre><code class="language-json">{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [{
+        &quot;Effect&quot;: &quot;Allow&quot;,
+        &quot;Principal&quot;: {&quot;Service&quot;: &quot;lambda.amazonaws.com&quot;},
+        &quot;Action&quot;: &quot;sts:AssumeRole&quot;
+    }]
+}
+</code></pre>
+<ol start="8">
+<li>MFA เพิ่มความปลอดภัยอีกชั้น เปิดใช้งานผ่าน IAM Console &gt; Users &gt; Security credentials &gt; Manage MFA device</li>
+<li><code>aws iam create-access-key --user-name username</code> และ <code>aws iam delete-access-key --access-key-id OLD_KEY_ID --user-name username</code></li>
+<li>AWS ประเมินทุก Policy ถ้ามี Deny เกิดขึ้น จะ Deny ทันทีโดยไม่สน Allow</li>
+</ol>
+<h2>แหล่งอ้างอิง</h2>
+<ul>
+<li>AWS IAM Documentation: <a href="https://docs.aws.amazon.com/iam/">https://docs.aws.amazon.com/iam/</a></li>
+<li>IAM Policy Reference: <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html">https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html</a></li>
+<li>Boto3 IAM Documentation: <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iam.html">https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iam.html</a></li>
+</ul>
+<hr>
+<h1>บทที่ 2: AWS Elastic Compute Cloud (EC2)</h1>
+<h2>สรุปสั้นก่อนเข้าเนื้อหา</h2>
+<blockquote>
+<p><strong>EC2</strong> คือบริการ Virtual Machine ในคลาวด์ ปรับขนาดได้ตามต้องการ จ่ายตามการใช้จริง รองรับ OS ได้หลากหลาย</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>คำตอบ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>คืออะไร</strong></td>
+<td>Virtual Server ใน AWS Cloud</td>
+</tr>
+<tr>
+<td><strong>มีกี่แบบ</strong></td>
+<td>Instance Types (General, Compute, Memory, Storage, GPU)</td>
+</tr>
+<tr>
+<td><strong>ใช้อย่างไร</strong></td>
+<td>เลือก AMI → เลือก Instance Type → กำหนด Security Group → Launch</td>
+</tr>
+<tr>
+<td><strong>ทำไมต้องใช้</strong></td>
+<td>ยืดหยุ่น ปรับขนาดได้ จ่ายเท่าที่ใช้ ไม่ต้องดูแล Hardware</td>
+</tr>
+<tr>
+<td><strong>ประโยชน์</strong></td>
+<td>เปิด-ปิดได้ทันที, Auto Scaling, รองรับหลาย OS</td>
+</tr>
+<tr>
+<td><strong>ข้อควรระวัง</strong></td>
+<td>หยุด instance แล้วยังมีค่า EBS, Public IP เปลี่ยนเมื่อ restart</td>
+</tr>
+<tr>
+<td><strong>ข้อดี</strong></td>
+<td>ยืดหยุ่นสูง, ควบคุมได้เต็มที่</td>
+</tr>
+<tr>
+<td><strong>ข้อเสีย</strong></td>
+<td>ต้องจัดการ OS เอง, มีค่าใช้จ่ายต่อเนื่อง</td>
+</tr>
+<tr>
+<td><strong>ข้อห้าม</strong></td>
+<td>ห้ามใช้ Root volume แบบ instance store สำหรับข้อมูลสำคัญ</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>วัตถุประสงค์ (แบบสั้นสำหรับทบทวน)</h2>
+<p>เพื่อให้ผู้อ่านสามารถ:</p>
+<ol>
+<li>เลือก Instance Type และ AMI ที่เหมาะสม</li>
+<li>สร้างและจัดการ EC2 ผ่าน Console, CLI, และ SDK</li>
+<li>กำหนด Security Groups และ Key Pairs</li>
+<li>ทำ Auto Scaling และ Load Balancing</li>
+<li>แนบ IAM Role ให้ EC2</li>
+</ol>
+<h2>กลุ่มเป้าหมาย</h2>
+<ul>
+<li>DevOps Engineer</li>
+<li>System Administrator</li>
+<li>Developer ที่ต้อง Deploy บน EC2</li>
+<li>Solutions Architect</li>
+</ul>
+<h2>ความรู้พื้นฐาน</h2>
+<ul>
+<li>ความเข้าใจ SSH และ Linux/Windows พื้นฐาน</li>
+<li>เคยใช้ Command Line มาก่อน</li>
+<li>เข้าใจ Networking พื้นฐาน (IP, Port)</li>
+</ul>
+<hr>
+<h2>บทนำ</h2>
+<p>EC2 เป็นบริการหลักที่ทำให้ AWS เติบโตอย่างรวดเร็ว เพราะเปลี่ยนจากการซื้อ Server มาเป็นการ &quot;เช่า&quot; Virtual Machine แบบจ่ายตามการใช้ คุณสามารถสร้าง Server ใหม่ได้ภายในไม่กี่นาที ปรับขนาดขึ้นลงตามความต้องการ โดยไม่ต้องลงทุนซื้อ Hardware ล่วงหน้า</p>
+<h2>บทนิยาม</h2>
+<table>
+<thead>
+<tr>
+<th>ศัพท์เทคนิค</th>
+<th>คำอธิบาย</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>AMI</strong></td>
+<td>Amazon Machine Image - Template สำหรับสร้าง Instance</td>
+</tr>
+<tr>
+<td><strong>Instance Type</strong></td>
+<td>Spec ของ CPU, RAM, Network</td>
+</tr>
+<tr>
+<td><strong>Security Group</strong></td>
+<td>Firewall ควบคุม Traffic เข้า-ออก</td>
+</tr>
+<tr>
+<td><strong>Key Pair</strong></td>
+<td>SSH Public Key สำหรับเข้าถึง Instance</td>
+</tr>
+<tr>
+<td><strong>EBS</strong></td>
+<td>Elastic Block Store - Hard Disk ในคลาวด์</td>
+</tr>
+<tr>
+<td><strong>Elastic IP</strong></td>
+<td>IP Address แบบคงที่</td>
+</tr>
+<tr>
+<td><strong>User Data</strong></td>
+<td>Script ที่รันตอน Instance เริ่มทำงาน</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>ออกแบบ Workflow</h2>
+<h3>รูปแบบ Dataflow Diagram (Mermaid)</h3>
+<pre><code class="language-mermaid">flowchart TB
+    subgraph &quot;Preparation&quot;
+        A[Choose AMI&lt;br/&gt;Amazon Linux/Ubuntu/Windows]
+        B[Choose Instance Type&lt;br/&gt;t3.micro / m5.large / etc]
+        C[Create Key Pair&lt;br/&gt;for SSH Access]
+        D[Configure Security Group&lt;br/&gt;Allow SSH/HTTP/HTTPS]
+    end
+
+    subgraph &quot;Launch&quot;
+        E[Launch Instance]
+        F[Attach IAM Role&lt;br/&gt;Optional]
+        G[User Data Script&lt;br/&gt;Auto-configuration]
+    end
+
+    subgraph &quot;Lifecycle Management&quot;
+        H[Running]
+        I[Stop / Start]
+        J[Reboot]
+        K[Terminate]
+        L[Create AMI&lt;br/&gt;for Backup]
+    end
+
+    subgraph &quot;Scaling &amp; HA&quot;
+        M[Auto Scaling Group]
+        N[Load Balancer]
+        O[Target Group]
+    end
+
+    A --&gt; E
+    B --&gt; E
+    C --&gt; E
+    D --&gt; E
+    E --&gt; F
+    E --&gt; G
+    F --&gt; H
+    G --&gt; H
+    H --&gt; I
+    H --&gt; J
+    H --&gt; K
+    H --&gt; L
+    H --&gt; M
+    M --&gt; N
+    N --&gt; O
+</code></pre>
+<h3>คำอธิบาย Dataflow อย่างละเอียด</h3>
+<p><strong>ขั้นตอนที่ 1: การเตรียมการ</strong></p>
+<ul>
+<li>เลือก AMI: Ubuntu 22.04, Amazon Linux 2023, Windows Server 2019 เป็นต้น</li>
+<li>เลือก Instance Type: t3.micro (ฟรี tier), m5.large (งานทั่วไป), c5.large (CPU intensive)</li>
+<li>สร้าง Key Pair: ใช้ SSH เข้า Instance (Linux) หรือ RDP (Windows)</li>
+<li>กำหนด Security Group: เปิด Port 22 (SSH), 80 (HTTP), 443 (HTTPS)</li>
+</ul>
+<p><strong>ขั้นตอนที่ 2: การ Launch</strong></p>
+<ul>
+<li>ระบุจำนวน Instance (1 หรือมากกว่า)</li>
+<li>กำหนด EBS Volume Size (default 8-30 GB)</li>
+<li>ใส่ User Data เพื่อติดตั้ง Software อัตโนมัติ</li>
+</ul>
+<p><strong>ขั้นตอนที่ 3: การจัดการ Lifecycle</strong></p>
+<ul>
+<li>Running: ใช้งานปกติ มีค่าใช้จ่าย</li>
+<li>Stopped: ไม่มีค่า Instance แต่ยังมีค่า EBS</li>
+<li>Terminated: ลบ Instance ทิ้ง ไม่มีค่าใช้จ่าย</li>
+</ul>
+<p><strong>ขั้นตอนที่ 4: การทำ High Availability</strong></p>
+<ul>
+<li>Auto Scaling Group: ปรับจำนวน Instance อัตโนมัติตาม Metric</li>
+<li>Load Balancer: กระจาย Traffic ไปยังหลาย Instance</li>
+</ul>
+<hr>
+<h2>ตัวอย่างโค้ดที่รันได้จริง</h2>
+<h3>ตัวอย่างที่ 1: Launch EC2 Instance ด้วย AWS CLI</h3>
+<pre><code class="language-bash"># 1. สร้าง Security Group
+# 1. Create Security Group
+aws ec2 create-security-group \
+    --group-name web-server-sg \
+    --description &quot;Security group for web server&quot; \
+    --vpc-id vpc-xxxxxx
+
+# 2. เพิ่ม Rule อนุญาต SSH, HTTP, HTTPS
+# 2. Add rules to allow SSH, HTTP, HTTPS
+aws ec2 authorize-security-group-ingress \
+    --group-id sg-xxxxxx \
+    --protocol tcp \
+    --port 22 \
+    --cidr 0.0.0.0/0
+
+aws ec2 authorize-security-group-ingress \
+    --group-id sg-xxxxxx \
+    --protocol tcp \
+    --port 80 \
+    --cidr 0.0.0.0/0
+
+# 3. Launch EC2 Instance
+# 3. Launch EC2 Instance
+aws ec2 run-instances \
+    --image-id ami-0c55b159cbfafe1f0 \
+    --instance-type t3.micro \
+    --key-name my-key-pair \
+    --security-group-ids sg-xxxxxx \
+    --subnet-id subnet-xxxxxx \
+    --user-data &quot;#!/bin/bash
+                  yum update -y
+                  yum install -y httpd
+                  systemctl start httpd
+                  systemctl enable httpd&quot; \
+    --tag-specifications &#39;ResourceType=instance,Tags=[{Key=Name,Value=WebServer}]&#39;
+</code></pre>
+<h3>ตัวอย่างที่ 2: Python Boto3 - จัดการ EC2</h3>
+<pre><code class="language-python">import boto3
+import time
+
+ec2_client = boto3.client(&#39;ec2&#39;)
+ec2_resource = boto3.resource(&#39;ec2&#39;)
+
+# 1. สร้าง Key Pair
+# 1. Create Key Pair
+key_pair = ec2_client.create_key_pair(
+    KeyName=&#39;my-app-key&#39;,
+    KeyType=&#39;rsa&#39;,
+    KeyFormat=&#39;pem&#39;
+)
+
+# Save private key to file
+with open(&#39;my-app-key.pem&#39;, &#39;w&#39;) as f:
+    f.write(key_pair[&#39;KeyMaterial&#39;])
+print(&quot;✅ สร้าง Key Pair สำเร็จ: my-app-key.pem&quot;)
+# ✅ Key Pair created successfully: my-app-key.pem
+
+# 2. สร้าง Security Group
+# 2. Create Security Group
+security_group = ec2_client.create_security_group(
+    GroupName=&#39;app-security-group&#39;,
+    Description=&#39;Security group for my application&#39;,
+    VpcId=&#39;vpc-xxxxxx&#39;
+)
+
+# Add inbound rules
+ec2_client.authorize_security_group_ingress(
+    GroupId=security_group[&#39;GroupId&#39;],
+    IpPermissions=[
+        {
+            &#39;IpProtocol&#39;: &#39;tcp&#39;,
+            &#39;FromPort&#39;: 22,
+            &#39;ToPort&#39;: 22,
+            &#39;IpRanges&#39;: [{&#39;CidrIp&#39;: &#39;0.0.0.0/0&#39;, &#39;Description&#39;: &#39;SSH&#39;}]
+        },
+        {
+            &#39;IpProtocol&#39;: &#39;tcp&#39;,
+            &#39;FromPort&#39;: 80,
+            &#39;ToPort&#39;: 80,
+            &#39;IpRanges&#39;: [{&#39;CidrIp&#39;: &#39;0.0.0.0/0&#39;, &#39;Description&#39;: &#39;HTTP&#39;}]
+        },
+        {
+            &#39;IpProtocol&#39;: &#39;tcp&#39;,
+            &#39;FromPort&#39;: 443,
+            &#39;ToPort&#39;: 443,
+            &#39;IpRanges&#39;: [{&#39;CidrIp&#39;: &#39;0.0.0.0/0&#39;, &#39;Description&#39;: &#39;HTTPS&#39;}]
+        }
+    ]
+)
+print(&quot;✅ Security Group สร้างและกำหนด Rules สำเร็จ&quot;)
+# ✅ Security Group created and rules configured successfully
+
+# 3. Launch Instance
+# 3. Launch Instance
+user_data_script = &quot;&quot;&quot;#!/bin/bash
+# ติดตั้ง Docker บน Amazon Linux 2
+# Install Docker on Amazon Linux 2
+yum update -y
+amazon-linux-extras install docker -y
+systemctl start docker
+systemctl enable docker
+usermod -a -G docker ec2-user
+&quot;&quot;&quot;
+
+instances = ec2_client.run_instances(
+    ImageId=&#39;ami-0c55b159cbfafe1f0&#39;,  # Amazon Linux 2
+    InstanceType=&#39;t3.micro&#39;,
+    KeyName=&#39;my-app-key&#39;,
+    SecurityGroupIds=[security_group[&#39;GroupId&#39;]],
+    SubnetId=&#39;subnet-xxxxxx&#39;,
+    UserData=user_data_script,
+    MinCount=1,
+    MaxCount=1,
+    TagSpecifications=[
+        {
+            &#39;ResourceType&#39;: &#39;instance&#39;,
+            &#39;Tags&#39;: [
+                {&#39;Key&#39;: &#39;Name&#39;, &#39;Value&#39;: &#39;Docker-Server&#39;},
+                {&#39;Key&#39;: &#39;Environment&#39;, &#39;Value&#39;: &#39;Development&#39;}
+            ]
+        }
+    ]
+)
+
+instance_id = instances[&#39;Instances&#39;][0][&#39;InstanceId&#39;]
+print(f&quot;✅ Launch Instance สำเร็จ: {instance_id}&quot;)
+# ✅ Instance launched successfully: i-xxxxxx
+
+# 4. รอให้ Instance อยู่ในสถานะ Running
+# 4. Wait for instance to be in Running state
+waiter = ec2_client.get_waiter(&#39;instance_running&#39;)
+waiter.wait(InstanceIds=[instance_id])
+print(&quot;✅ Instance อยู่ในสถานะ Running แล้ว&quot;)
+# ✅ Instance is now in Running state
+
+# 5. ดึง Public IP Address
+# 5. Get Public IP Address
+instance_info = ec2_client.describe_instances(InstanceIds=[instance_id])
+public_ip = instance_info[&#39;Reservations&#39;][0][&#39;Instances&#39;][0][&#39;PublicIpAddress&#39;]
+print(f&quot;🌐 Public IP: {public_ip}&quot;)
+# 🌐 Public IP: 54.123.45.67
+</code></pre>
+<h3>ตัวอย่างที่ 3: สร้าง Auto Scaling Group</h3>
+<pre><code class="language-python">import boto3
+
+autoscaling = boto3.client(&#39;autoscaling&#39;)
+elbv2 = boto3.client(&#39;elbv2&#39;)
+ec2 = boto3.client(&#39;ec2&#39;)
+
+# 1. สร้าง Launch Template
+# 1. Create Launch Template
+launch_template = ec2.create_launch_template(
+    LaunchTemplateName=&#39;web-app-template&#39;,
+    LaunchTemplateData={
+        &#39;ImageId&#39;: &#39;ami-0c55b159cbfafe1f0&#39;,
+        &#39;InstanceType&#39;: &#39;t3.micro&#39;,
+        &#39;KeyName&#39;: &#39;my-key-pair&#39;,
+        &#39;SecurityGroupIds&#39;: [&#39;sg-xxxxxx&#39;],
+        &#39;UserData&#39;: &#39;IyEvYmluL2Jhc2g...&#39;  # base64 encoded
+    }
+)
+
+# 2. สร้าง Target Group สำหรับ Load Balancer
+# 2. Create Target Group for Load Balancer
+target_group = elbv2.create_target_group(
+    Name=&#39;web-app-tg&#39;,
+    Protocol=&#39;HTTP&#39;,
+    Port=80,
+    VpcId=&#39;vpc-xxxxxx&#39;,
+    HealthCheckProtocol=&#39;HTTP&#39;,
+    HealthCheckPath=&#39;/health&#39;,
+    HealthCheckIntervalSeconds=30,
+    HealthyThresholdCount=2,
+    UnhealthyThresholdCount=3
+)
+
+# 3. สร้าง Auto Scaling Group
+# 3. Create Auto Scaling Group
+autoscaling.create_auto_scaling_group(
+    AutoScalingGroupName=&#39;web-app-asg&#39;,
+    LaunchTemplate={
+        &#39;LaunchTemplateName&#39;: &#39;web-app-template&#39;,
+        &#39;Version&#39;: &#39;$Latest&#39;
+    },
+    MinSize=2,
+    MaxSize=10,
+    DesiredCapacity=2,
+    VPCZoneIdentifier=&#39;subnet-xxxxxx,subnet-yyyyyy&#39;,
+    TargetGroupARNs=[target_group[&#39;TargetGroups&#39;][0][&#39;TargetGroupArn&#39;]],
+    HealthCheckType=&#39;ELB&#39;,
+    HealthCheckGracePeriod=300,
+    Tags=[
+        {&#39;Key&#39;: &#39;Name&#39;, &#39;Value&#39;: &#39;WebApp&#39;, &#39;PropagateAtLaunch&#39;: True},
+        {&#39;Key&#39;: &#39;Environment&#39;, &#39;Value&#39;: &#39;Production&#39;, &#39;PropagateAtLaunch&#39;: True}
+    ]
+)
+
+# 4. สร้าง Scaling Policy (Scale based on CPU)
+# 4. Create Scaling Policy (Scale based on CPU)
+autoscaling.put_scaling_policy(
+    AutoScalingGroupName=&#39;web-app-asg&#39;,
+    PolicyName=&#39;cpu-scale-out&#39;,
+    PolicyType=&#39;TargetTrackingScaling&#39;,
+    TargetTrackingConfiguration={
+        &#39;PredefinedMetricSpecification&#39;: {
+            &#39;PredefinedMetricType&#39;: &#39;ASGAverageCPUUtilization&#39;
+        },
+        &#39;TargetValue&#39;: 70.0
+    }
+)
+
+print(&quot;✅ Auto Scaling Group สร้างเสร็จสมบูรณ์&quot;)
+# ✅ Auto Scaling Group created successfully
+</code></pre>
+<h3>ตัวอย่างที่ 4: Attach IAM Role ให้ EC2 (ทำให้ EC2 เข้าถึง S3 ได้)</h3>
+<pre><code class="language-bash"># สร้าง IAM Role สำหรับ EC2
+# Create IAM Role for EC2
+aws iam create-role \
+    --role-name ec2-s3-access-role \
+    --assume-role-policy-document &#39;{
+        &quot;Version&quot;: &quot;2012-10-17&quot;,
+        &quot;Statement&quot;: [{
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Principal&quot;: {&quot;Service&quot;: &quot;ec2.amazonaws.com&quot;},
+            &quot;Action&quot;: &quot;sts:AssumeRole&quot;
+        }]
+    }&#39;
+
+# Attach S3 ReadOnly Policy
+# Attach S3 ReadOnly Policy
+aws iam attach-role-policy \
+    --role-name ec2-s3-access-role \
+    --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+
+# สร้าง Instance Profile
+# Create Instance Profile
+aws iam create-instance-profile \
+    --instance-profile-name ec2-s3-profile
+
+# Add Role to Instance Profile
+# Add Role to Instance Profile
+aws iam add-role-to-instance-profile \
+    --instance-profile-name ec2-s3-profile \
+    --role-name ec2-s3-access-role
+
+# Launch EC2 พร้อม Instance Profile
+# Launch EC2 with Instance Profile
+aws ec2 run-instances \
+    --image-id ami-0c55b159cbfafe1f0 \
+    --instance-type t3.micro \
+    --iam-instance-profile Name=ec2-s3-profile \
+    ... (parameters อื่นๆ)
+</code></pre>
+<h3>ตัวอย่างที่ 5: User Data Script ติดตั้ง Web Application</h3>
+<pre><code class="language-bash">#!/bin/bash
+# User Data Script สำหรับติดตั้ง Node.js web app บน Ubuntu 22.04
+# User Data Script for installing Node.js web app on Ubuntu 22.04
+
+# Update system
+# อัปเดตระบบ
+apt-get update -y
+apt-get upgrade -y
+
+# Install Node.js 18.x
+# ติดตั้ง Node.js 18.x
+curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+apt-get install -y nodejs
+
+# Install PM2 for process management
+# ติดตั้ง PM2 สำหรับจัดการ process
+npm install -g pm2
+
+# Create app directory
+# สร้างโฟลเดอร์แอปพลิเคชัน
+mkdir -p /var/www/myapp
+cd /var/www/myapp
+
+# Create a simple Express app
+# สร้าง Express app อย่างง่าย
+cat &gt; app.js &lt;&lt; &#39;EOF&#39;
+const express = require(&#39;express&#39;);
+const app = express();
+const port = 3000;
+
+app.get(&#39;/&#39;, (req, res) =&gt; {
+    res.send(&#39;Hello from EC2 Instance!&#39;);
+});
+
+app.get(&#39;/health&#39;, (req, res) =&gt; {
+    res.status(200).send(&#39;OK&#39;);
+});
+
+app.listen(port, () =&gt; {
+    console.log(`App listening on port ${port}`);
+});
+EOF
+
+# Install dependencies
+# ติดตั้ง dependencies
+npm install express
+
+# Start app with PM2
+# เริ่มแอปด้วย PM2
+pm2 start app.js
+pm2 save
+pm2 startup
+
+# Install and configure nginx as reverse proxy
+# ติดตั้งและตั้งค่า nginx เป็น reverse proxy
+apt-get install -y nginx
+
+cat &gt; /etc/nginx/sites-available/myapp &lt;&lt; &#39;EOF&#39;
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection &#39;upgrade&#39;;
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+EOF
+
+ln -s /etc/nginx/sites-available/myapp /etc/nginx/sites-enabled/
+rm -f /etc/nginx/sites-enabled/default
+systemctl restart nginx
+
+echo &quot;✅ Web application deployed successfully!&quot;
+</code></pre>
+<hr>
+<h2>ตารางสรุป Instance Types</h2>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Type Example</th>
+<th>vCPU</th>
+<th>RAM (GiB)</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>General Purpose</strong></td>
+<td>t3.micro, m5.large</td>
+<td>2</td>
+<td>8</td>
+<td>Web servers, dev/test</td>
+</tr>
+<tr>
+<td><strong>Compute Optimized</strong></td>
+<td>c5.large, c6i.large</td>
+<td>2</td>
+<td>4</td>
+<td>Batch processing, gaming</td>
+</tr>
+<tr>
+<td><strong>Memory Optimized</strong></td>
+<td>r5.large, x1e.xlarge</td>
+<td>2</td>
+<td>16</td>
+<td>Databases, caching</td>
+</tr>
+<tr>
+<td><strong>Storage Optimized</strong></td>
+<td>i3.large, d2.xlarge</td>
+<td>2</td>
+<td>15.25</td>
+<td>Data warehouses, Hadoop</td>
+</tr>
+<tr>
+<td><strong>GPU</strong></td>
+<td>g4dn.xlarge, p3.2xlarge</td>
+<td>4 + GPU</td>
+<td>16</td>
+<td>ML, video rendering</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>แบบฝึกหัดท้ายบท</h2>
+<ol>
+<li>จงอธิบายความแตกต่างระหว่าง Stop, Reboot, และ Terminate Instance</li>
+<li>จงเขียน CLI เพื่อสร้าง Security Group ที่เปิด Port 22, 80, 443</li>
+<li>จงอธิบายว่าทำไม Public IP จึงเปลี่ยนเมื่อ Stop แล้ว Start</li>
+<li>จงเขียน Python Boto3 เพื่อ List Instance ทั้งหมดใน Region พร้อมแสดง Name Tag และ State</li>
+<li>จงอธิบาย Auto Scaling Group ทำงานอย่างไร</li>
+<li>จงเขียน User Data Script สำหรับติดตั้ง Nginx บน Amazon Linux 2</li>
+<li>จงอธิบายความแตกต่างระหว่าง EBS และ Instance Store</li>
+<li>จงเขียน CLI เพื่อสร้าง EBS Volume ขนาด 50GB และ Attach เข้ากับ Instance</li>
+<li>จงอธิบายวิธีทำ Snapshot Backup สำหรับ EC2</li>
+<li>จงเขียน Python เพื่อสร้าง AMI จาก Instance ที่กำลังทำงานอยู่</li>
+</ol>
+<h2>เฉลยแบบฝึกหัด</h2>
+<ol>
+<li><strong>Stop</strong>: หยุด Instance (ยังมี EBS) <strong>Reboot</strong>: รีสตาร์ท OS <strong>Terminate</strong>: ลบ Instance ทิ้ง</li>
+<li></li>
+</ol>
+<pre><code class="language-bash">aws ec2 create-security-group --group-name my-sg --description &quot;My SG&quot;
+aws ec2 authorize-security-group-ingress --group-id sg-xxx --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id sg-xxx --protocol tcp --port 80 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id sg-xxx --protocol tcp --port 443 --cidr 0.0.0.0/0
+</code></pre>
+<ol start="3">
+<li>EC2 จะได้รับ Public IP ใหม่จาก Pool ของ AWS ทุกครั้งที่ Start หลังจาก Stop</li>
+<li></li>
+</ol>
+<pre><code class="language-python">for instance in ec2_resource.instances.all():
+    name = next((t[&#39;Value&#39;] for t in instance.tags if t[&#39;Key&#39;]==&#39;Name&#39;), &#39;No Name&#39;)
+    print(f&quot;{name}: {instance.state[&#39;Name&#39;]}&quot;)
+</code></pre>
+<ol start="5">
+<li>ASG จะรักษาจำนวน Instance ตามที่กำหนด ปรับขนาดอัตโนมัติตาม Metric เช่น CPU Utilization</li>
+<li></li>
+</ol>
+<pre><code class="language-bash">#!/bin/bash
+yum update -y
+yum install -y nginx
+systemctl start nginx
+systemctl enable nginx
+</code></pre>
+<ol start="7">
+<li><strong>EBS</strong>: Persistent, backup ได้, detached ได้ <strong>Instance Store</strong>: Ephemeral, สูญหายเมื่อ stop, performance สูง</li>
+<li></li>
+</ol>
+<pre><code class="language-bash">aws ec2 create-volume --size 50 --availability-zone us-east-1a
+aws ec2 attach-volume --volume-id vol-xxx --instance-id i-xxx --device /dev/sdf
+</code></pre>
+<ol start="9">
+<li>ใช้ <code>aws ec2 create-snapshot --volume-id vol-xxx --description &quot;My backup&quot;</code></li>
+<li></li>
+</ol>
+<pre><code class="language-python">ami = ec2_client.create_image(InstanceId=&#39;i-xxx&#39;, Name=&#39;my-backup-ami&#39;)
+</code></pre>
+<h2>แหล่งอ้างอิง</h2>
+<ul>
+<li>EC2 Documentation: <a href="https://docs.aws.amazon.com/ec2/">https://docs.aws.amazon.com/ec2/</a></li>
+<li>EC2 Instance Types: <a href="https://aws.amazon.com/ec2/instance-types/">https://aws.amazon.com/ec2/instance-types/</a></li>
+<li>Auto Scaling: <a href="https://docs.aws.amazon.com/autoscaling/">https://docs.aws.amazon.com/autoscaling/</a></li>
+</ul>
+<hr>
+<h1>บทที่ 3: AWS Simple Storage Service (S3)</h1>
+<h2>สรุปสั้นก่อนเข้าเนื้อหา</h2>
+<blockquote>
+<p><strong>S3</strong> คือ Object Storage ในคลาวด์ เก็บไฟล์ได้ไม่จำกัด อ่าน-เขียนผ่าน HTTP/HTTPS มีความทนทานสูง (11 9&#39;s)</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>คำตอบ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>คืออะไร</strong></td>
+<td>บริการเก็บข้อมูลแบบ Object</td>
+</tr>
+<tr>
+<td><strong>มีกี่แบบ</strong></td>
+<td>Storage Classes: Standard, IA, Glacier, Intelligent-Tiering</td>
+</tr>
+<tr>
+<td><strong>ใช้อย่างไร</strong></td>
+<td>สร้าง Bucket → ตั้ง Permission → Upload File</td>
+</tr>
+<tr>
+<td><strong>ทำไมต้องใช้</strong></td>
+<td>เก็บไฟล์ได้ทุกประเภท, เข้าถึงจาก anywhere, Scale ได้อัตโนมัติ</td>
+</tr>
+<tr>
+<td><strong>ประโยชน์</strong></td>
+<td>ทนทานสูง, ต้นทุนต่ำ, Versioning, Lifecycle Policy</td>
+</tr>
+<tr>
+<td><strong>ข้อควรระวัง</strong></td>
+<td>Bucket name ต้อง unique ทั่วโลก, ค่า Transfer cost</td>
+</tr>
+<tr>
+<td><strong>ข้อดี</strong></td>
+<td>ไม่จำกัดขนาดไฟล์, replication ได้, static website hosting</td>
+</tr>
+<tr>
+<td><strong>ข้อเสีย</strong></td>
+<td>เปลี่ยน Storage Class ไม่ได้ทันที, eventual consistency สำหรับ overwrite PUT</td>
+</tr>
+<tr>
+<td><strong>ข้อห้าม</strong></td>
+<td>ห้ามใช้ S3 เป็น Database, ห้าม公开 Bucket โดยไม่จำเป็น</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>วัตถุประสงค์ (แบบสั้นสำหรับทบทวน)</h2>
+<p>เพื่อให้ผู้อ่านสามารถ:</p>
+<ol>
+<li>สร้างและจัดการ S3 Bucket</li>
+<li>กำหนด Bucket Policy และ IAM Policy</li>
+<li>ใช้ S3 Versioning, Lifecycle Rules, Encryption</li>
+<li>ทำ Static Website Hosting</li>
+<li>ตั้งค่า Cross-Region Replication (CRR)</li>
+</ol>
+<h2>กลุ่มเป้าหมาย</h2>
+<ul>
+<li>Developer ที่ต้องเก็บไฟล์</li>
+<li>Data Engineer ที่ทำ Data Lake</li>
+<li>DevOps สำหรับเก็บ Logs, Backups</li>
+<li>Web Developer ที่ทำ Static Hosting</li>
+</ul>
+<h2>ความรู้พื้นฐาน</h2>
+<ul>
+<li>ความเข้าใจ HTTP/REST API</li>
+<li>เคยใช้งาน Cloud Storage</li>
+<li>เข้าใจ JSON พื้นฐานสำหรับ Policy</li>
+</ul>
+<hr>
+<h2>บทนำ</h2>
+<p>S3 เป็นบริการจัดเก็บข้อมูลที่ได้รับความนิยมสูงสุดของ AWS เพราะใช้งานง่าย ทนทาน และต้นทุนต่ำ องค์กรใช้ S3 เก็บทุกอย่างตั้งแต่รูปภาพ, Video, Logs, Backups, ไปจนถึง Data Lake ขนาดหลาย Petabyte</p>
+<h2>บทนิยาม</h2>
+<table>
+<thead>
+<tr>
+<th>ศัพท์เทคนิค</th>
+<th>คำอธิบาย</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Bucket</strong></td>
+<td>Container สำหรับเก็บ Objects เหมือน Folder ระดับสูงสุด</td>
+</tr>
+<tr>
+<td><strong>Object</strong></td>
+<td>ไฟล์ + Metadata (Key คือชื่อไฟล์)</td>
+</tr>
+<tr>
+<td><strong>Storage Class</strong></td>
+<td>ระดับความถี่ในการเข้าถึง</td>
+</tr>
+<tr>
+<td><strong>Versioning</strong></td>
+<td>เก็บหลายเวอร์ชันของ Object เดียวกัน</td>
+</tr>
+<tr>
+<td><strong>Lifecycle Policy</strong></td>
+<td>กฎการย้ายหรือลบ Object อัตโนมัติ</td>
+</tr>
+<tr>
+<td><strong>Pre-signed URL</strong></td>
+<td>URL ที่เข้าถึง Object ได้แบบมีระยะเวลา</td>
+</tr>
+<tr>
+<td><strong>CORS</strong></td>
+<td>Cross-Origin Resource Sharing</td>
+</tr>
+<tr>
+<td><strong>Bucket Policy</strong></td>
+<td>JSON ที่กำหนดสิทธิ์ระดับ Bucket</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>ออกแบบ Workflow</h2>
+<h3>รูปแบบ Dataflow Diagram (Mermaid)</h3>
+<pre><code class="language-mermaid">flowchart TB
+    subgraph &quot;Client&quot;
+        A[User/Application]
+        B[AWS CLI/SDK]
+        C[Web Browser]
+    end
+
+    subgraph &quot;S3 Bucket&quot;
+        D[Bucket Policy&lt;br/&gt;&amp; ACL]
+        E[Encryption&lt;br/&gt;SSE-S3/KMS/CSE]
+        F[Versioning&lt;br/&gt;Enable/Disable]
+    end
+
+    subgraph &quot;Storage Classes&quot;
+        G[S3 Standard&lt;br/&gt;Frequent Access]
+        H[S3 Intelligent-Tiering&lt;br/&gt;Auto tiering]
+        I[S3 Standard-IA&lt;br/&gt;Infrequent Access]
+        J[S3 Glacier&lt;br/&gt;Archive]
+        K[S3 Glacier Deep Archive&lt;br/&gt;Long-term archive]
+    end
+
+    subgraph &quot;Data Management&quot;
+        L[Lifecycle Rules]
+        M[Replication Rules&lt;br/&gt;CRR/SRR]
+        N[Event Notifications&lt;br/&gt;SQS/SNS/Lambda]
+    end
+
+    A --&gt; B
+    B --&gt; D
+    D --&gt; E
+    E --&gt; F
+    F --&gt; L
+    L --&gt; G
+    L --&gt; I
+    L --&gt; J
+    L --&gt; K
+    F --&gt; M
+    F --&gt; N
+</code></pre>
+<h3>คำอธิบาย Dataflow อย่างละเอียด</h3>
+<p><strong>ขั้นตอนที่ 1: การสร้าง Bucket</strong></p>
+<ul>
+<li>Bucket name ต้อง unique ทั่วโลก (DNS-compatible)</li>
+<li>เลือก Region (ควรใกล้ผู้ใช้งาน)</li>
+<li>ตั้งค่า Public Access Block (แนะนำให้ Block ทั้งหมดยกเว้นจำเป็น)</li>
+</ul>
+<p><strong>ขั้นตอนที่ 2: การ Upload Object</strong></p>
+<ul>
+<li>Object Key คือ path + filename (เช่น <code>logs/2024/app.log</code>)</li>
+<li>Upload ได้หลายวิธี: Console, CLI, SDK, API</li>
+<li>กำหนด Metadata, Storage Class, Encryption</li>
+</ul>
+<p><strong>ขั้นตอนที่ 3: การกำหนดสิทธิ์</strong></p>
+<ul>
+<li>Bucket Policy: ควบคุมการเข้าถึงระดับ Bucket</li>
+<li>IAM Policy: ควบคุมผ่าน IAM User/Role</li>
+<li>ACL: แบบดั้งเดิม (ไม่แนะนำ)</li>
+<li>Pre-signed URL: สำหรับให้เข้าถึงชั่วคราว</li>
+</ul>
+<p><strong>ขั้นตอนที่ 4: การจัดการ Data Lifecycle</strong></p>
+<ul>
+<li>กำหนด Lifecycle Rule: เช่น ย้ายไป IA หลัง 30 วัน → Glacier หลัง 90 วัน</li>
+<li>Versioning: เก็บทุกเวอร์ชันของ Object</li>
+<li>Replication: Sync Bucket ข้าม Region</li>
+</ul>
+<hr>
+<h2>ตัวอย่างโค้ดที่รันได้จริง</h2>
+<h3>ตัวอย่างที่ 1: สร้าง Bucket และจัดการ Object ด้วย AWS CLI</h3>
+<pre><code class="language-bash"># 1. สร้าง Bucket (ชื่อต้อง unique)
+# 1. Create Bucket (name must be unique)
+aws s3api create-bucket \
+    --bucket my-unique-bucket-name-2024 \
+    --region us-east-1
+
+# 2. สร้าง Bucket ใน Region อื่น (ต้อง specify LocationConstraint)
+# 2. Create Bucket in another region (must specify LocationConstraint)
+aws s3api create-bucket \
+    --bucket my-ap-southeast-bucket \
+    --region ap-southeast-1 \
+    --create-bucket-configuration LocationConstraint=ap-southeast-1
+
+# 3. เปิดใช้งาน Versioning
+# 3. Enable Versioning
+aws s3api put-bucket-versioning \
+    --bucket my-unique-bucket-name-2024 \
+    --versioning-configuration Status=Enabled
+
+# 4. Upload file
+# 4. Upload file
+aws s3 cp ./myfile.txt s3://my-unique-bucket-name-2024/uploads/
+
+# 5. Download file
+# 5. Download file
+aws s3 cp s3://my-unique-bucket-name-2024/uploads/myfile.txt ./downloaded.txt
+
+# 6. List objects
+# 6. List objects
+aws s3 ls s3://my-unique-bucket-name-2024/uploads/ --recursive
+
+# 7. Sync folder (อัปโหลดเฉพาะไฟล์ที่เปลี่ยนแปลง)
+# 7. Sync folder (upload only changed files)
+aws s3 sync ./local-folder/ s3://my-unique-bucket-name-2024/backups/
+
+# 8. สร้าง Pre-signed URL (หมดอายุใน 1 ชั่วโมง)
+# 8. Create Pre-signed URL (expires in 1 hour)
+aws s3 presign s3://my-unique-bucket-name-2024/uploads/myfile.txt --expires-in 3600
+</code></pre>
+<h3>ตัวอย่างที่ 2: Bucket Policy (Public Read สำหรับบาง folder)</h3>
+<pre><code class="language-json">{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;PublicReadForWebsite&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Principal&quot;: &quot;*&quot;,
+            &quot;Action&quot;: &quot;s3:GetObject&quot;,
+            &quot;Resource&quot;: &quot;arn:aws:s3:::my-website-bucket/*&quot;,
+            &quot;Condition&quot;: {
+                &quot;StringEquals&quot;: {
+                    &quot;s3:prefix&quot;: &quot;public/&quot;
+                }
+            }
+        },
+        {
+            &quot;Sid&quot;: &quot;DenyDeleteForEveryone&quot;,
+            &quot;Effect&quot;: &quot;Deny&quot;,
+            &quot;Principal&quot;: &quot;*&quot;,
+            &quot;Action&quot;: &quot;s3:DeleteObject&quot;,
+            &quot;Resource&quot;: &quot;arn:aws:s3:::my-website-bucket/*&quot;
+        }
+    ]
+}
+</code></pre>
+<h3>ตัวอย่างที่ 3: Python Boto3 - S3 Management</h3>
+<pre><code class="language-python">import boto3
+from botocore.exceptions import ClientError
+import json
+
+s3_client = boto3.client(&#39;s3&#39;)
+s3_resource = boto3.resource(&#39;s3&#39;)
+
+# 1. สร้าง Bucket
+# 1. Create Bucket
+bucket_name = &#39;my-data-bucket-2024&#39;
+try:
+    response = s3_client.create_bucket(
+        Bucket=bucket_name,
+        CreateBucketConfiguration={
+            &#39;LocationConstraint&#39;: &#39;ap-southeast-1&#39;
+        }
+    )
+    print(f&quot;✅ สร้าง Bucket สำเร็จ: {bucket_name}&quot;)
+    # ✅ Bucket created successfully: my-data-bucket-2024
+except ClientError as e:
+    print(f&quot;❌ Error: {e}&quot;)
+    # ❌ Error: Bucket already exists or invalid name
+
+# 2. เปิดใช้งาน Versioning
+# 2. Enable Versioning
+s3_client.put_bucket_versioning(
+    Bucket=bucket_name,
+    VersioningConfiguration={&#39;Status&#39;: &#39;Enabled&#39;}
+)
+print(&quot;✅ Versioning เปิดใช้งานแล้ว&quot;)
+# ✅ Versioning enabled
+
+# 3. เปิดใช้งาน Default Encryption (SSE-S3)
+# 3. Enable Default Encryption (SSE-S3)
+s3_client.put_bucket_encryption(
+    Bucket=bucket_name,
+    ServerSideEncryptionConfiguration={
+        &#39;Rules&#39;: [
+            {&#39;ApplyServerSideEncryptionByDefault&#39;: {&#39;SSEAlgorithm&#39;: &#39;AES256&#39;}}
+        ]
+    }
+)
+print(&quot;✅ Default Encryption เปิดใช้งานแล้ว&quot;)
+# ✅ Default Encryption enabled
+
+# 4. ตั้งค่า Lifecycle Policy
+# 4. Configure Lifecycle Policy
+lifecycle_policy = {
+    &#39;Rules&#39;: [
+        {
+            &#39;Id&#39;: &#39;MoveToIAAfter30Days&#39;,
+            &#39;Status&#39;: &#39;Enabled&#39;,
+            &#39;Prefix&#39;: &#39;&#39;,
+            &#39;Transitions&#39;: [
+                {
+                    &#39;Days&#39;: 30,
+                    &#39;StorageClass&#39;: &#39;STANDARD_IA&#39;
+                },
+                {
+                    &#39;Days&#39;: 90,
+                    &#39;StorageClass&#39;: &#39;GLACIER&#39;
+                }
+            ],
+            &#39;Expiration&#39;: {
+                &#39;Days&#39;: 365
+            }
+        },
+        {
+            &#39;Id&#39;: &#39;DeleteOldVersions&#39;,
+            &#39;Status&#39;: &#39;Enabled&#39;,
+            &#39;Prefix&#39;: &#39;&#39;,
+            &#39;NoncurrentVersionExpiration&#39;: {
+                &#39;NoncurrentDays&#39;: 30
+            }
+        }
+    ]
+}
+
+s3_client.put_bucket_lifecycle_configuration(
+    Bucket=bucket_name,
+    LifecycleConfiguration=lifecycle_policy
+)
+print(&quot;✅ Lifecycle Policy ตั้งค่าแล้ว&quot;)
+# ✅ Lifecycle Policy configured
+
+# 5. Upload file พร้อมกำหนด Metadata
+# 5. Upload file with Metadata
+with open(&#39;data.csv&#39;, &#39;rb&#39;) as file:
+    s3_client.upload_fileobj(
+        file,
+        bucket_name,
+        &#39;uploads/data.csv&#39;,
+        ExtraArgs={
+            &#39;Metadata&#39;: {
+                &#39;created-by&#39;: &#39;automation&#39;,
+                &#39;department&#39;: &#39;analytics&#39;
+            },
+            &#39;StorageClass&#39;: &#39;STANDARD_IA&#39;,
+            &#39;ServerSideEncryption&#39;: &#39;AES256&#39;
+        }
+    )
+print(&quot;✅ Upload file สำเร็จ&quot;)
+# ✅ File uploaded successfully
+
+# 6. Generate Pre-signed URL
+# 6. Generate Pre-signed URL
+url = s3_client.generate_presigned_url(
+    ClientMethod=&#39;get_object&#39;,
+    Params={
+        &#39;Bucket&#39;: bucket_name,
+        &#39;Key&#39;: &#39;uploads/data.csv&#39;
+    },
+    ExpiresIn=3600  # 1 hour
+)
+print(f&quot;🔗 Pre-signed URL: {url}&quot;)
+# 🔗 Pre-signed URL: https://my-data-bucket-2024.s3.amazonaws.com/uploads/data.csv?AWSAccessKeyId=...
+
+# 7. List objects with versions
+# 7. List objects with versions
+versions = s3_client.list_object_versions(Bucket=bucket_name)
+for version in versions.get(&#39;Versions&#39;, []):
+    print(f&quot;Key: {version[&#39;Key&#39;]}, VersionId: {version[&#39;VersionId&#39;]}, LastModified: {version[&#39;LastModified&#39;]}&quot;)
+
+# 8. Download specific version
+# 8. Download specific version
+s3_client.download_file(
+    bucket_name,
+    &#39;uploads/data.csv&#39;,
+    &#39;restored_data.csv&#39;,
+    ExtraArgs={&#39;VersionId&#39;: &#39;specific_version_id_here&#39;}
+)
+print(&quot;✅ ดาวน์โหลด Version ที่ระบุสำเร็จ&quot;)
+# ✅ Downloaded specific version successfully
+</code></pre>
+<h3>ตัวอย่างที่ 4: Static Website Hosting บน S3</h3>
+<pre><code class="language-python">import boto3
+
+s3 = boto3.client(&#39;s3&#39;)
+bucket_name = &#39;my-static-website-bucket&#39;
+
+# 1. สร้าง Bucket สำหรับ Static Website
+# 1. Create Bucket for Static Website
+s3.create_bucket(
+    Bucket=bucket_name,
+    CreateBucketConfiguration={&#39;LocationConstraint&#39;: &#39;ap-southeast-1&#39;}
+)
+
+# 2. เปิดใช้งาน Static Website Hosting
+# 2. Enable Static Website Hosting
+s3.put_bucket_website(
+    Bucket=bucket_name,
+    WebsiteConfiguration={
+        &#39;IndexDocument&#39;: {&#39;Suffix&#39;: &#39;index.html&#39;},
+        &#39;ErrorDocument&#39;: {&#39;Key&#39;: &#39;error.html&#39;}
+    }
+)
+
+# 3. Upload HTML files
+# 3. Upload HTML files
+# index.html
+index_html = &quot;&quot;&quot;&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;My Static Website&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to my S3 Static Website!&lt;/h1&gt;
+    &lt;p&gt;Hosted on AWS S3&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&quot;&quot;&quot;
+s3.put_object(
+    Bucket=bucket_name,
+    Key=&#39;index.html&#39;,
+    Body=index_html,
+    ContentType=&#39;text/html&#39;
+)
+
+# error.html
+error_html = &quot;&quot;&quot;&lt;!DOCTYPE html&gt;
+&lt;html&gt;&lt;body&gt;&lt;h1&gt;404 - Page Not Found&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+&quot;&quot;&quot;
+s3.put_object(
+    Bucket=bucket_name,
+    Key=&#39;error.html&#39;,
+    Body=error_html,
+    ContentType=&#39;text/html&#39;
+)
+
+# 4. ตั้งค่า Bucket Policy ให้ Public Read
+# 4. Set Bucket Policy for Public Read
+bucket_policy = {
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;PublicReadGetObject&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Principal&quot;: &quot;*&quot;,
+            &quot;Action&quot;: &quot;s3:GetObject&quot;,
+            &quot;Resource&quot;: f&quot;arn:aws:s3:::{bucket_name}/*&quot;
+        }
+    ]
+}
+s3.put_bucket_policy(
+    Bucket=bucket_name,
+    Policy=json.dumps(bucket_policy)
+)
+
+# 5. Get website endpoint
+# 5. Get website endpoint
+website_url = f&quot;http://{bucket_name}.s3-website-ap-southeast-1.amazonaws.com&quot;
+print(f&quot;🌐 Website URL: {website_url}&quot;)
+# 🌐 Website URL: http://my-static-website-bucket.s3-website-ap-southeast-1.amazonaws.com
+</code></pre>
+<h3>ตัวอย่างที่ 5: S3 Event Notification ไปยัง Lambda</h3>
+<pre><code class="language-python">import boto3
+import json
+
+lambda_client = boto3.client(&#39;lambda&#39;)
+s3_client = boto3.client(&#39;s3&#39;)
+
+bucket_name = &#39;my-event-bucket&#39;
+
+# 1. สร้าง Lambda Function (ตัวอย่างง่ายๆ)
+# 1. Create Lambda Function (simple example)
+lambda_function_code = &quot;&quot;&quot;
+import json
+import boto3
+
+def lambda_handler(event, context):
+    print(f&quot;Received event: {json.dumps(event)}&quot;)
+    # Process S3 event
+    for record in event[&#39;Records&#39;]:
+        bucket = record[&#39;s3&#39;][&#39;bucket&#39;][&#39;name&#39;]
+        key = record[&#39;s3&#39;][&#39;object&#39;][&#39;key&#39;]
+        print(f&quot;File uploaded: s3://{bucket}/{key}&quot;)
+    return {&#39;statusCode&#39;: 200, &#39;body&#39;: &#39;Processed&#39;}
+&quot;&quot;&quot;
+
+# 2. ตั้งค่า Permission ให้ S3 สามารถเรียก Lambda ได้
+# 2. Set Permission for S3 to invoke Lambda
+lambda_client.add_permission(
+    FunctionName=&#39;process-s3-upload&#39;,
+    StatementId=&#39;s3-invoke&#39;,
+    Action=&#39;lambda:InvokeFunction&#39;,
+    Principal=&#39;s3.amazonaws.com&#39;,
+    SourceArn=f&#39;arn:aws:s3:::{bucket_name}&#39;
+)
+
+# 3. ตั้งค่า Event Notification บน S3
+# 3. Configure Event Notification on S3
+notification_config = {
+    &#39;LambdaFunctionConfigurations&#39;: [
+        {
+            &#39;LambdaFunctionArn&#39;: &#39;arn:aws:lambda:us-east-1:123456789012:function:process-s3-upload&#39;,
+            &#39;Events&#39;: [&#39;s3:ObjectCreated:*&#39;],
+            &#39;Filter&#39;: {
+                &#39;Key&#39;: {
+                    &#39;FilterRules&#39;: [
+                        {&#39;Name&#39;: &#39;prefix&#39;, &#39;Value&#39;: &#39;images/&#39;},
+                        {&#39;Name&#39;: &#39;suffix&#39;, &#39;Value&#39;: &#39;.jpg&#39;}
+                    ]
+                }
+            }
+        }
+    ]
+}
+
+s3_client.put_bucket_notification_configuration(
+    Bucket=bucket_name,
+    NotificationConfiguration=notification_config
+)
+print(&quot;✅ Event Notification ตั้งค่าแล้ว - Lambda จะถูกเรียกเมื่อมีไฟล์ .jpg ใน folder images/&quot;)
+# ✅ Event Notification configured - Lambda will be triggered when .jpg files are uploaded to images/ folder
+</code></pre>
+<hr>
+<h2>ตารางสรุป Storage Classes</h2>
+<table>
+<thead>
+<tr>
+<th>Storage Class</th>
+<th>Minimum Storage Duration</th>
+<th>Retrieval Time</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>S3 Standard</strong></td>
+<td>None</td>
+<td>มิลลิวินาที</td>
+<td>Frequent access</td>
+</tr>
+<tr>
+<td><strong>S3 Intelligent-Tiering</strong></td>
+<td>30 days</td>
+<td>มิลลิวินาที</td>
+<td>Unknown access patterns</td>
+</tr>
+<tr>
+<td><strong>S3 Standard-IA</strong></td>
+<td>30 days</td>
+<td>มิลลิวินาที</td>
+<td>Infrequent access</td>
+</tr>
+<tr>
+<td><strong>S3 One Zone-IA</strong></td>
+<td>30 days</td>
+<td>มิลลิวินาที</td>
+<td>Non-critical, infrequent</td>
+</tr>
+<tr>
+<td><strong>S3 Glacier Instant</strong></td>
+<td>90 days</td>
+<td>มิลลิวินาที</td>
+<td>Long-lived, rare access</td>
+</tr>
+<tr>
+<td><strong>S3 Glacier Flexible</strong></td>
+<td>90 days</td>
+<td>นาที-ชั่วโมง</td>
+<td>Archive, backup</td>
+</tr>
+<tr>
+<td><strong>S3 Glacier Deep Archive</strong></td>
+<td>180 days</td>
+<td>ชั่วโมง</td>
+<td>Long-term compliance</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>แบบฝึกหัดท้ายบท</h2>
+<ol>
+<li>จงอธิบายความแตกต่างระหว่าง S3 Standard และ S3 Glacier</li>
+<li>จงเขียน CLI เพื่อสร้าง Bucket และเปิด Versioning</li>
+<li>จงอธิบาย Pre-signed URL ใช้ทำอะไร</li>
+<li>จงเขียน Python เพื่อ Upload file และกำหนด Storage Class เป็น STANDARD_IA</li>
+<li>จงเขียน Bucket Policy ที่อนุญาตให้อ่านไฟล์จาก folder <code>public</code> เท่านั้น</li>
+<li>จงอธิบาย Lifecycle Policy และยกตัวอย่าง</li>
+<li>จงเขียน CLI เพื่อ Sync folder ไปยัง S3</li>
+<li>จงอธิบาย S3 Event Notification และการนำไปใช้</li>
+<li>จงเขียน Python เพื่อ Generate Pre-signed URL สำหรับ Upload</li>
+<li>จงอธิบายความแตกต่างระหว่าง Bucket Policy และ IAM Policy</li>
+</ol>
+<h2>เฉลยแบบฝึกหัด</h2>
+<ol>
+<li><strong>S3 Standard</strong>: เข้าถึงบ่อย, เรียกคืนทันที, ต้นทุนเก็บสูงกว่า <strong>S3 Glacier</strong>: สำหรับเก็บถาวร, เรียกคืนช้า (นาที-ชั่วโมง), ต้นทุนต่ำ</li>
+<li><code>aws s3api create-bucket --bucket my-bucket --region us-east-1</code> แล้ว <code>aws s3api put-bucket-versioning --bucket my-bucket --versioning-configuration Status=Enabled</code></li>
+<li>Pre-signed URL ให้สิทธิ์เข้าถึง Object ชั่วคราว เหมาะกับ private file ที่ต้องการแชร์แบบมีระยะเวลา</li>
+<li></li>
+</ol>
+<pre><code class="language-python">s3.upload_file(&#39;file.txt&#39;, &#39;bucket&#39;, &#39;key&#39;, ExtraArgs={&#39;StorageClass&#39;: &#39;STANDARD_IA&#39;})
+</code></pre>
+<p>5. </p>
+<pre><code class="language-json">{
+    &quot;Statement&quot;: [{
+        &quot;Effect&quot;: &quot;Allow&quot;,
+        &quot;Principal&quot;: &quot;*&quot;,
+        &quot;Action&quot;: &quot;s3:GetObject&quot;,
+        &quot;Resource&quot;: &quot;arn:aws:s3:::bucket/public/*&quot;
+    }]
+}
+</code></pre>
+<ol start="6">
+<li>Lifecycle Policy ย้ายหรือลบ Object อัตโนมัติตามเวลา เช่น ย้ายไป Glacier หลัง 90 วัน</li>
+<li><code>aws s3 sync ./local-folder/ s3://bucket/folder/</code></li>
+<li>S3 Event Notification ส่งการแจ้งเตือนเมื่อเกิด Event (PUT, DELETE) ไปยัง SNS, SQS, หรือ Lambda</li>
+<li></li>
+</ol>
+<pre><code class="language-python">url = s3.generate_presigned_url(&#39;put_object&#39;, Params={&#39;Bucket&#39;: &#39;bucket&#39;, &#39;Key&#39;: &#39;file&#39;}, ExpiresIn=3600)
+</code></pre>
+<ol start="10">
+<li><strong>Bucket Policy</strong>: กำหนดสิทธิ์ระดับ Bucket (External) <strong>IAM Policy</strong>: กำหนดสิทธิ์ให้ User/Role (Internal)</li>
+</ol>
+<h2>แหล่งอ้างอิง</h2>
+<ul>
+<li>S3 Documentation: <a href="https://docs.aws.amazon.com/s3/">https://docs.aws.amazon.com/s3/</a></li>
+<li>S3 Storage Classes: <a href="https://aws.amazon.com/s3/storage-classes/">https://aws.amazon.com/s3/storage-classes/</a></li>
+<li>Boto3 S3: <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html">https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html</a></li>
+</ul>
+<hr>
+<h1>บทที่ 4: ระบบ Monitoring ด้วย Grafana และ Notification ผ่าน Email และ Microsoft Teams</h1>
+<h2>สรุปสั้นก่อนเข้าเนื้อหา</h2>
+<blockquote>
+<p><strong>Grafana + AWS CloudWatch + Alert Manager</strong> ช่วยสร้าง Dashboard และแจ้งเตือนแบบ Real-time ผ่าน Email และ Microsoft Teams</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>คำตอบ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>คืออะไร</strong></td>
+<td>ระบบ Visualize Metrics และ Alerting</td>
+</tr>
+<tr>
+<td><strong>มีกี่แบบ</strong></td>
+<td>CloudWatch Dashboard, Grafana, Prometheus Alertmanager</td>
+</tr>
+<tr>
+<td><strong>ใช้อย่างไร</strong></td>
+<td>ติดตั้ง Grafana → เชื่อมต่อ Data Source (CloudWatch) → สร้าง Dashboard → ตั้ง Alert → ส่ง Notification</td>
+</tr>
+<tr>
+<td><strong>ทำไมต้องใช้</strong></td>
+<td>มองเห็น Health ของระบบ, แจ้งเตือนก่อนเกิดปัญหา</td>
+</tr>
+<tr>
+<td><strong>ประโยชน์</strong></td>
+<td>Real-time, History Data, ปัญหาลดลง</td>
+</tr>
+<tr>
+<td><strong>ข้อควรระวัง</strong></td>
+<td>Alert fatigue (Alert มากเกินไป), ค่าใช้จ่าย CloudWatch Metrics</td>
+</tr>
+<tr>
+<td><strong>ข้อดี</strong></td>
+<td>ใช้งานง่าย, รองรับหลาย Data Source, ฟรี (Grafana OSS)</td>
+</tr>
+<tr>
+<td><strong>ข้อเสีย</strong></td>
+<td>CloudWatch Metrics มีค่าใช้จ่าย, ต้องมี Infrastructure รองรับ</td>
+</tr>
+<tr>
+<td><strong>ข้อห้าม</strong></td>
+<td>ห้ามตั้ง Alert threshold ต่ำเกินไป (จะ Alert ตลอด)</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>วัตถุประสงค์ (แบบสั้นสำหรับทบทวน)</h2>
+<p>เพื่อให้ผู้อ่านสามารถ:</p>
+<ol>
+<li>ติดตั้งและตั้งค่า Grafana</li>
+<li>เชื่อมต่อ Grafana กับ AWS CloudWatch</li>
+<li>สร้าง Dashboard สำหรับ monitoring EC2, S3</li>
+<li>ตั้ง Alert Rules</li>
+<li>ส่ง Notification ผ่าน Email และ Microsoft Teams</li>
+</ol>
+<h2>กลุ่มเป้าหมาย</h2>
+<ul>
+<li>DevOps Engineer</li>
+<li>System Administrator</li>
+<li>SRE (Site Reliability Engineer)</li>
+<li>Developer ที่ดูแล Production</li>
+</ul>
+<h2>ความรู้พื้นฐาน</h2>
+<ul>
+<li>เคยใช้งาน EC2 และ S3</li>
+<li>เข้าใจ Metrics พื้นฐาน (CPU, Memory, Disk, Network)</li>
+<li>เคยใช้งาน Web UI (Grafana)</li>
+</ul>
+<hr>
+<h2>บทนำ</h2>
+<p>การ Monitoring เป็นหัวใจสำคัญของการทำระบบให้เสถียร หากไม่มีระบบแจ้งเตือน ปัญหาอาจเกิดขึ้นโดยที่ทีมไม่รู้ตัว จนกระทั่ง User แจ้ง Grafana เป็นเครื่องมือ Open-source ที่ได้รับความนิยมสูงสุดในการทำ Dashboard และ Alerting เนื่องจากใช้งานง่าย รองรับ Data Source หลากหลาย</p>
+<h2>บทนิยาม</h2>
+<table>
+<thead>
+<tr>
+<th>ศัพท์เทคนิค</th>
+<th>คำอธิบาย</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Grafana</strong></td>
+<td>Open-source platform สำหรับ visualize และ analyze metrics</td>
+</tr>
+<tr>
+<td><strong>CloudWatch</strong></td>
+<td>บริการ Monitoring ของ AWS เก็บ Metrics และ Logs</td>
+</tr>
+<tr>
+<td><strong>Data Source</strong></td>
+<td>แหล่งข้อมูลที่ Grafana ดึงมาแสดง (CloudWatch, Prometheus, InfluxDB)</td>
+</tr>
+<tr>
+<td><strong>Dashboard</strong></td>
+<td>หน้าจอรวม Panel แสดงข้อมูล</td>
+</tr>
+<tr>
+<td><strong>Panel</strong></td>
+<td>กราฟหรือตารางแต่ละอันใน Dashboard</td>
+</tr>
+<tr>
+<td><strong>Alert Rule</strong></td>
+<td>กฎที่กำหนดเงื่อนไขในการแจ้งเตือน</td>
+</tr>
+<tr>
+<td><strong>Alert Channel</strong></td>
+<td>ช่องทางส่งการแจ้งเตือน (Email, Teams, Slack)</td>
+</tr>
+<tr>
+<td><strong>SNS</strong></td>
+<td>AWS Simple Notification Service</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>ออกแบบ Workflow</h2>
+<h3>รูปแบบ Dataflow Diagram (Mermaid)</h3>
+<pre><code class="language-mermaid">flowchart TB
+    subgraph &quot;AWS Services&quot;
+        A[EC2 Instances]
+        B[S3 Buckets]
+        C[RDS Databases]
+        D[CloudWatch Metrics]
+        E[CloudWatch Logs]
+    end
+
+    subgraph &quot;Grafana Server&quot;
+        F[Grafana OSS/Cloud]
+        G[CloudWatch Data Source]
+        H[Dashboard]
+        I[Alert Rules]
+    end
+
+    subgraph &quot;Alert Manager&quot;
+        J[Alert Evaluation]
+        K{Threshold&lt;br/&gt;Exceeded?}
+    end
+
+    subgraph &quot;Notification Channels&quot;
+        L[Email SMTP]
+        M[Microsoft Teams&lt;br/&gt;Webhook]
+        N[AWS SNS]
+        O[Slack]
+    end
+
+    subgraph &quot;Recipients&quot;
+        P[System Admin]
+        Q[DevOps Team]
+        R[On-call Engineer]
+    end
+
+    A --&gt; D
+    B --&gt; D
+    C --&gt; D
+    D --&gt; F
+    E --&gt; F
+    F --&gt; G
+    G --&gt; H
+    H --&gt; I
+    I --&gt; J
+    J --&gt; K
+    K -- Yes --&gt; L
+    K -- Yes --&gt; M
+    K -- Yes --&gt; N
+    L --&gt; P
+    M --&gt; Q
+    N --&gt; R
+</code></pre>
+<h3>คำอธิบาย Dataflow อย่างละเอียด</h3>
+<p><strong>ขั้นตอนที่ 1: การเก็บ Metrics</strong></p>
+<ul>
+<li>EC2, S3, RDS ส่ง Metrics ไปยัง CloudWatch อัตโนมัติ (CPU, Network, Disk I/O)</li>
+<li>สามารถส่ง Custom Metrics ได้ด้วย CloudWatch Agent</li>
+</ul>
+<p><strong>ขั้นตอนที่ 2: Grafana ดึงข้อมูล</strong></p>
+<ul>
+<li>Grafana เชื่อมต่อกับ CloudWatch ผ่าน IAM Role (EC2 ที่มี Role)</li>
+<li>ใช้ CloudWatch Data Source Plugin (ติดตั้งมาให้แล้ว)</li>
+</ul>
+<p><strong>ขั้นตอนที่ 3: สร้าง Dashboard</strong></p>
+<ul>
+<li>เลือก Metrics ที่ต้องการแสดง (เช่น CPU Utilization ของ EC2 ทั้งหมด)</li>
+<li>เลือกประเภท Panel (Time series, Stat, Table, Gauge)</li>
+<li>ตั้งค่าการแสดงผล (ช่วงเวลา, สี, Threshold)</li>
+</ul>
+<p><strong>ขั้นตอนที่ 4: ตั้ง Alert Rules</strong></p>
+<ul>
+<li>กำหนดเงื่อนไข เช่น CPU &gt; 80% เป็นเวลา 5 นาที</li>
+<li>กำหนด Evaluation Interval (ทุก 1 นาที)</li>
+<li>กำหนดเงื่อนไข For (duration ก่อนแจ้งเตือน)</li>
+</ul>
+<p><strong>ขั้นตอนที่ 5: ส่ง Notification</strong></p>
+<ul>
+<li>Email: ตั้งค่า SMTP ใน Grafana</li>
+<li>Microsoft Teams: ใช้ Incoming Webhook</li>
+<li>AWS SNS: ส่งต่อไปยัง Email, SMS, Lambda</li>
+</ul>
+<hr>
+<h2>ตัวอย่างโค้ดที่รันได้จริง</h2>
+<h3>ตัวอย่างที่ 1: ติดตั้ง Grafana บน EC2 (Ubuntu 22.04)</h3>
+<pre><code class="language-bash">#!/bin/bash
+# ติดตั้ง Grafana OSS บน Ubuntu 22.04
+# Install Grafana OSS on Ubuntu 22.04
+
+# Update system
+# อัปเดตระบบ
+sudo apt-get update -y
+sudo apt-get upgrade -y
+
+# Install dependencies
+# ติดตั้ง dependencies
+sudo apt-get install -y apt-transport-https software-properties-common wget
+
+# Add Grafana GPG key and repository
+# เพิ่ม GPG key และ repository ของ Grafana
+sudo mkdir -p /etc/apt/keyrings/
+wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg &gt; /dev/null
+echo &quot;deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main&quot; | sudo tee /etc/apt/sources.list.d/grafana.list
+
+# Install Grafana OSS
+# ติดตั้ง Grafana OSS
+sudo apt-get update
+sudo apt-get install -y grafana
+
+# Start and enable Grafana service
+# เริ่มและ enable service Grafana
+sudo systemctl daemon-reload
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server
+
+# Check status
+# ตรวจสอบสถานะ
+sudo systemctl status grafana-server
+
+echo &quot;✅ Grafana installed successfully!&quot;
+echo &quot;🌐 Access Grafana at: http://$(curl -s ifconfig.me):3000&quot;
+echo &quot;🔑 Default login: admin / admin (change password on first login)&quot;
+</code></pre>
+<h3>ตัวอย่างที่ 2: ตั้งค่า IAM Role สำหรับ Grafana (เข้าถึง CloudWatch)</h3>
+<pre><code class="language-json">// Grafana IAM Policy - grant permission to read CloudWatch metrics
+// นโยบาย IAM สำหรับ Grafana - ให้สิทธิ์อ่าน Metrics จาก CloudWatch
+{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;AllowCloudWatchRead&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Action&quot;: [
+                &quot;cloudwatch:GetMetricData&quot;,
+                &quot;cloudwatch:GetMetricStatistics&quot;,
+                &quot;cloudwatch:ListMetrics&quot;,
+                &quot;ec2:DescribeInstances&quot;,
+                &quot;ec2:DescribeTags&quot;
+            ],
+            &quot;Resource&quot;: &quot;*&quot;
+        },
+        {
+            &quot;Sid&quot;: &quot;AllowS3ReadForMonitoring&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Action&quot;: [
+                &quot;s3:GetBucketLocation&quot;,
+                &quot;s3:ListBucket&quot;,
+                &quot;s3:GetObject&quot;
+            ],
+            &quot;Resource&quot;: [
+                &quot;arn:aws:s3:::your-monitoring-bucket&quot;,
+                &quot;arn:aws:s3:::your-monitoring-bucket/*&quot;
+            ]
+        }
+    ]
+}
+</code></pre>
+<pre><code class="language-bash"># สร้าง IAM Role และ Attach Policy
+# Create IAM Role and Attach Policy
+aws iam create-role \
+    --role-name grafana-cloudwatch-role \
+    --assume-role-policy-document &#39;{
+        &quot;Version&quot;: &quot;2012-10-17&quot;,
+        &quot;Statement&quot;: [{
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Principal&quot;: {&quot;Service&quot;: &quot;ec2.amazonaws.com&quot;},
+            &quot;Action&quot;: &quot;sts:AssumeRole&quot;
+        }]
+    }&#39;
+
+aws iam put-role-policy \
+    --role-name grafana-cloudwatch-role \
+    --policy-name CloudWatchReadPolicy \
+    --policy-document file://grafana-policy.json
+
+aws iam create-instance-profile \
+    --instance-profile-name grafana-profile
+
+aws iam add-role-to-instance-profile \
+    --instance-profile-name grafana-profile \
+    --role-name grafana-cloudwatch-role
+</code></pre>
+<h3>ตัวอย่างที่ 3: ตั้งค่า Data Source CloudWatch ใน Grafana (ผ่าน API)</h3>
+<pre><code class="language-python">import requests
+import json
+
+grafana_url = &quot;http://localhost:3000&quot;
+api_token = &quot;your-grafana-api-token&quot;  # สร้างจาก Grafana &gt; Configuration &gt; API Keys
+
+# Headers
+headers = {
+    &quot;Authorization&quot;: f&quot;Bearer {api_token}&quot;,
+    &quot;Content-Type&quot;: &quot;application/json&quot;
+}
+
+# CloudWatch Data Source configuration
+# การตั้งค่า Data Source CloudWatch
+cloudwatch_datasource = {
+    &quot;name&quot;: &quot;AWS-CloudWatch&quot;,
+    &quot;type&quot;: &quot;cloudwatch&quot;,
+    &quot;access&quot;: &quot;proxy&quot;,
+    &quot;url&quot;: &quot;https://monitoring.us-east-1.amazonaws.com&quot;,
+    &quot;jsonData&quot;: {
+        &quot;authType&quot;: &quot;ec2_iam_role&quot;,  # ใช้ IAM Role ที่ attach กับ EC2
+        &quot;defaultRegion&quot;: &quot;ap-southeast-1&quot;
+    },
+    &quot;secureJsonData&quot;: {
+        # ไม่ต้องใส่ Access Key เมื่อใช้ IAM Role
+    }
+}
+
+# Create data source
+# สร้าง data source
+response = requests.post(
+    f&quot;{grafana_url}/api/datasources&quot;,
+    headers=headers,
+    data=json.dumps(cloudwatch_datasource)
+)
+
+if response.status_code == 200:
+    print(&quot;✅ CloudWatch Data Source created successfully!&quot;)
+else:
+    print(f&quot;❌ Error: {response.status_code} - {response.text}&quot;)
+</code></pre>
+<h3>ตัวอย่างที่ 4: สร้าง Dashboard แบบ JSON (Import ผ่าน API)</h3>
+<pre><code class="language-json">// dashboard-ec2-monitoring.json
+// JSON Dashboard สำหรับ monitoring EC2
+{
+  &quot;dashboard&quot;: {
+    &quot;title&quot;: &quot;EC2 Production Monitoring&quot;,
+    &quot;tags&quot;: [&quot;aws&quot;, &quot;ec2&quot;, &quot;production&quot;],
+    &quot;timezone&quot;: &quot;browser&quot;,
+    &quot;panels&quot;: [
+      {
+        &quot;title&quot;: &quot;CPU Utilization - All Instances&quot;,
+        &quot;type&quot;: &quot;timeseries&quot;,
+        &quot;gridPos&quot;: {&quot;h&quot;: 8, &quot;w&quot;: 12, &quot;x&quot;: 0, &quot;y&quot;: 0},
+        &quot;targets&quot;: [
+          {
+            &quot;refId&quot;: &quot;A&quot;,
+            &quot;region&quot;: &quot;ap-southeast-1&quot;,
+            &quot;namespace&quot;: &quot;AWS/EC2&quot;,
+            &quot;metricName&quot;: &quot;CPUUtilization&quot;,
+            &quot;statistics&quot;: [&quot;Average&quot;],
+            &quot;dimensions&quot;: {},
+            &quot;period&quot;: &quot;300&quot;
+          }
+        ],
+        &quot;fieldConfig&quot;: {
+          &quot;defaults&quot;: {
+            &quot;unit&quot;: &quot;percent&quot;,
+            &quot;thresholds&quot;: {
+              &quot;mode&quot;: &quot;absolute&quot;,
+              &quot;steps&quot;: [
+                {&quot;color&quot;: &quot;green&quot;, &quot;value&quot;: null},
+                {&quot;color&quot;: &quot;yellow&quot;, &quot;value&quot;: 70},
+                {&quot;color&quot;: &quot;red&quot;, &quot;value&quot;: 90}
+              ]
+            }
+          }
+        }
+      },
+      {
+        &quot;title&quot;: &quot;Network In/Out&quot;,
+        &quot;type&quot;: &quot;timeseries&quot;,
+        &quot;gridPos&quot;: {&quot;h&quot;: 8, &quot;w&quot;: 12, &quot;x&quot;: 12, &quot;y&quot;: 0},
+        &quot;targets&quot;: [
+          {
+            &quot;refId&quot;: &quot;A&quot;,
+            &quot;region&quot;: &quot;ap-southeast-1&quot;,
+            &quot;namespace&quot;: &quot;AWS/EC2&quot;,
+            &quot;metricName&quot;: &quot;NetworkIn&quot;,
+            &quot;statistics&quot;: [&quot;Average&quot;]
+          },
+          {
+            &quot;refId&quot;: &quot;B&quot;,
+            &quot;region&quot;: &quot;ap-southeast-1&quot;,
+            &quot;namespace&quot;: &quot;AWS/EC2&quot;,
+            &quot;metricName&quot;: &quot;NetworkOut&quot;,
+            &quot;statistics&quot;: [&quot;Average&quot;]
+          }
+        ]
+      },
+      {
+        &quot;title&quot;: &quot;S3 Bucket Size&quot;,
+        &quot;type&quot;: &quot;stat&quot;,
+        &quot;gridPos&quot;: {&quot;h&quot;: 4, &quot;w&quot;: 6, &quot;x&quot;: 0, &quot;y&quot;: 8},
+        &quot;targets&quot;: [
+          {
+            &quot;refId&quot;: &quot;A&quot;,
+            &quot;region&quot;: &quot;ap-southeast-1&quot;,
+            &quot;namespace&quot;: &quot;AWS/S3&quot;,
+            &quot;metricName&quot;: &quot;BucketSizeBytes&quot;,
+            &quot;statistics&quot;: [&quot;Average&quot;],
+            &quot;dimensions&quot;: {
+              &quot;BucketName&quot;: &quot;my-data-bucket&quot;,
+              &quot;StorageType&quot;: &quot;StandardStorage&quot;
+            }
+          }
+        ],
+        &quot;fieldConfig&quot;: {
+          &quot;defaults&quot;: {
+            &quot;unit&quot;: &quot;bytes&quot;,
+            &quot;decimals&quot;: 2
+          }
+        }
+      }
+    ],
+    &quot;refresh&quot;: &quot;30s&quot;,
+    &quot;time&quot;: {&quot;from&quot;: &quot;now-6h&quot;, &quot;to&quot;: &quot;now&quot;}
+  },
+  &quot;overwrite&quot;: true
+}
+</code></pre>
+<pre><code class="language-bash"># Import dashboard ผ่าน API
+# Import dashboard via API
+curl -X POST http://localhost:3000/api/dashboards/db \
+    -H &quot;Authorization: Bearer YOUR_API_TOKEN&quot; \
+    -H &quot;Content-Type: application/json&quot; \
+    -d @dashboard-ec2-monitoring.json
+</code></pre>
+<h3>ตัวอย่างที่ 5: ตั้ง Alert Rule และ Notification Channel (Email + Teams)</h3>
+<pre><code class="language-python">import requests
+import json
+
+grafana_url = &quot;http://localhost:3000&quot;
+api_token = &quot;your-api-token&quot;
+headers = {
+    &quot;Authorization&quot;: f&quot;Bearer {api_token}&quot;,
+    &quot;Content-Type&quot;: &quot;application/json&quot;
+}
+
+# 1. สร้าง Notification Channel สำหรับ Email
+# 1. Create Notification Channel for Email
+email_channel = {
+    &quot;name&quot;: &quot;Email-Alerts&quot;,
+    &quot;type&quot;: &quot;email&quot;,
+    &quot;settings&quot;: {
+        &quot;addresses&quot;: &quot;admin@example.com,devops@example.com&quot;
+    }
+}
+
+response = requests.post(
+    f&quot;{grafana_url}/api/alert-notifications&quot;,
+    headers=headers,
+    data=json.dumps(email_channel)
+)
+print(&quot;✅ Email notification channel created&quot; if response.status_code == 200 else f&quot;❌ Error: {response.text}&quot;)
+
+# 2. สร้าง Notification Channel สำหรับ Microsoft Teams (Webhook)
+# 2. Create Notification Channel for Microsoft Teams (Webhook)
+teams_channel = {
+    &quot;name&quot;: &quot;Teams-Alerts&quot;,
+    &quot;type&quot;: &quot;teams&quot;,
+    &quot;settings&quot;: {
+        &quot;url&quot;: &quot;https://your-domain.webhook.office.com/xxxxx&quot;  # Teams Incoming Webhook URL
+    }
+}
+
+response = requests.post(
+    f&quot;{grafana_url}/api/alert-notifications&quot;,
+    headers=headers,
+    data=json.dumps(teams_channel)
+)
+print(&quot;✅ Microsoft Teams notification channel created&quot; if response.status_code == 200 else f&quot;❌ Error: {response.text}&quot;)
+
+# 3. สร้าง Alert Rule สำหรับ EC2 CPU สูงเกิน 80%
+# 3. Create Alert Rule for EC2 CPU exceeding 80%
+alert_rule = {
+    &quot;dashboardUid&quot;: &quot;ec2-dashboard-uid&quot;,
+    &quot;panelId&quot;: 1,
+    &quot;name&quot;: &quot;High CPU Alert&quot;,
+    &quot;message&quot;: &quot;EC2 instance CPU utilization has exceeded 80% for 5 minutes.&quot;,
+    &quot;frequency&quot;: &quot;1m&quot;,
+    &quot;for&quot;: &quot;5m&quot;,
+    &quot;conditions&quot;: [
+        {
+            &quot;type&quot;: &quot;query&quot;,
+            &quot;query&quot;: {
+                &quot;params&quot;: [&quot;A&quot;, &quot;5m&quot;, &quot;now&quot;]
+            },
+            &quot;reducer&quot;: {&quot;type&quot;: &quot;avg&quot;, &quot;params&quot;: []},
+            &quot;operator&quot;: {&quot;type&quot;: &quot;and&quot;},
+            &quot;evaluator&quot;: {&quot;type&quot;: &quot;gt&quot;, &quot;params&quot;: [80]}
+        }
+    ],
+    &quot;notifications&quot;: [
+        {&quot;uid&quot;: &quot;email-channel-uid&quot;},
+        {&quot;uid&quot;: &quot;teams-channel-uid&quot;}
+    ]
+}
+</code></pre>
+<h3>ตัวอย่างที่ 6: Microsoft Teams Webhook Notification Script</h3>
+<pre><code class="language-python">import requests
+import json
+from datetime import datetime
+
+# Microsoft Teams Webhook URL
+# URL Webhook ของ Microsoft Teams
+teams_webhook_url = &quot;https://your-domain.webhook.office.com/xxxxx&quot;
+
+def send_teams_alert(alert_title, alert_message, severity, instance_id, metric_value):
+    &quot;&quot;&quot;
+    Send alert to Microsoft Teams using incoming webhook
+    ส่ง alert ไปยัง Microsoft Teams โดยใช้ incoming webhook
+    &quot;&quot;&quot;
+    
+    # Determine color based on severity
+    # กำหนดสีตามระดับความรุนแรง
+    color_map = {
+        &quot;critical&quot;: &quot;FF0000&quot;,  # Red
+        &quot;warning&quot;: &quot;FFA500&quot;,   # Orange
+        &quot;info&quot;: &quot;00FF00&quot;       # Green
+    }
+    color = color_map.get(severity, &quot;0000FF&quot;)
+    
+    # Create Teams message card (Adaptive Card)
+    # สร้าง Teams message card (Adaptive Card)
+    teams_message = {
+        &quot;@type&quot;: &quot;MessageCard&quot;,
+        &quot;@context&quot;: &quot;http://schema.org/extensions&quot;,
+        &quot;themeColor&quot;: color,
+        &quot;title&quot;: f&quot;🚨 {alert_title}&quot;,
+        &quot;summary&quot;: alert_message,
+        &quot;sections&quot;: [
+            {
+                &quot;activityTitle&quot;: &quot;AWS Monitoring Alert&quot;,
+                &quot;activitySubtitle&quot;: f&quot;Severity: {severity.upper()}&quot;,
+                &quot;facts&quot;: [
+                    {&quot;name&quot;: &quot;Time&quot;, &quot;value&quot;: datetime.now().strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)},
+                    {&quot;name&quot;: &quot;Instance ID&quot;, &quot;value&quot;: instance_id},
+                    {&quot;name&quot;: &quot;Metric Value&quot;, &quot;value&quot;: str(metric_value)},
+                    {&quot;name&quot;: &quot;Message&quot;, &quot;value&quot;: alert_message}
+                ],
+                &quot;markdown&quot;: True
+            }
+        ],
+        &quot;potentialAction&quot;: [
+            {
+                &quot;@type&quot;: &quot;OpenUri&quot;,
+                &quot;name&quot;: &quot;View in Grafana&quot;,
+                &quot;targets&quot;: [
+                    {&quot;os&quot;: &quot;default&quot;, &quot;uri&quot;: &quot;http://your-grafana-url/d/ec2-dashboard&quot;}
+                ]
+            },
+            {
+                &quot;@type&quot;: &quot;OpenUri&quot;,
+                &quot;name&quot;: &quot;View in AWS Console&quot;,
+                &quot;targets&quot;: [
+                    {&quot;os&quot;: &quot;default&quot;, &quot;uri&quot;: f&quot;https://console.aws.amazon.com/ec2/v2/home?region=ap-southeast-1#InstanceDetails:instanceId={instance_id}&quot;}
+                ]
+            }
+        ]
+    }
+    
+    # Send to Teams
+    # ส่งไปยัง Teams
+    response = requests.post(
+        teams_webhook_url,
+        headers={&quot;Content-Type&quot;: &quot;application/json&quot;},
+        data=json.dumps(teams_message)
+    )
+    
+    if response.status_code == 200:
+        print(&quot;✅ Alert sent to Microsoft Teams successfully&quot;)
+    else:
+        print(f&quot;❌ Failed to send to Teams: {response.status_code} - {response.text}&quot;)
+
+# Example usage
+# ตัวอย่างการใช้งาน
+send_teams_alert(
+    alert_title=&quot;High CPU Alert&quot;,
+    alert_message=&quot;EC2 instance CPU utilization exceeded threshold&quot;,
+    severity=&quot;critical&quot;,
+    instance_id=&quot;i-1234567890abcdef0&quot;,
+    metric_value=&quot;94.5%&quot;
+)
+</code></pre>
+<h3>ตัวอย่างที่ 7: สร้าง Custom Metric สำหรับ S3 และส่ง Alert</h3>
+<pre><code class="language-python">import boto3
+from datetime import datetime, timedelta
+
+cloudwatch = boto3.client(&#39;cloudwatch&#39;)
+
+# สร้าง Custom Metric สำหรับ S3 object count
+# Create Custom Metric for S3 object count
+def publish_s3_custom_metrics(bucket_name):
+    &quot;&quot;&quot;
+    Publish custom S3 metrics to CloudWatch
+    ส่ง custom metrics ของ S3 ไปยัง CloudWatch
+    &quot;&quot;&quot;
+    
+    s3 = boto3.client(&#39;s3&#39;)
+    
+    # Count objects in bucket
+    # นับจำนวน objects ใน bucket
+    paginator = s3.get_paginator(&#39;list_objects_v2&#39;)
+    object_count = 0
+    
+    for page in paginator.paginate(Bucket=bucket_name):
+        if &#39;Contents&#39; in page:
+            object_count += len(page[&#39;Contents&#39;])
+    
+    # Send to CloudWatch
+    # ส่งไปยัง CloudWatch
+    cloudwatch.put_metric_data(
+        Namespace=&#39;Custom/S3&#39;,
+        MetricData=[
+            {
+                &#39;MetricName&#39;: &#39;ObjectCount&#39;,
+                &#39;Value&#39;: object_count,
+                &#39;Unit&#39;: &#39;Count&#39;,
+                &#39;Timestamp&#39;: datetime.utcnow(),
+                &#39;Dimensions&#39;: [
+                    {&#39;Name&#39;: &#39;BucketName&#39;, &#39;Value&#39;: bucket_name}
+                ]
+            }
+        ]
+    )
+    print(f&quot;✅ Published object count: {object_count} for bucket {bucket_name}&quot;)
+
+# สร้าง CloudWatch Alarm สำหรับ Custom Metric
+# Create CloudWatch Alarm for Custom Metric
+def create_s3_alarm(bucket_name, threshold=1000):
+    &quot;&quot;&quot;
+    Create CloudWatch alarm for S3 object count
+    สร้าง CloudWatch alarm สำหรับจำนวน object ใน S3
+    &quot;&quot;&quot;
+    
+    alarm_name = f&quot;s3-object-count-alarm-{bucket_name}&quot;
+    
+    cloudwatch.put_metric_alarm(
+        AlarmName=alarm_name,
+        ComparisonOperator=&#39;GreaterThanThreshold&#39;,
+        EvaluationPeriods=2,
+        MetricName=&#39;ObjectCount&#39;,
+        Namespace=&#39;Custom/S3&#39;,
+        Period=300,  # 5 minutes
+        Statistic=&#39;Average&#39;,
+        Threshold=threshold,
+        ActionsEnabled=True,
+        AlarmActions=[
+            &#39;arn:aws:sns:ap-southeast-1:123456789012:alerts-topic&#39;
+        ],
+        AlarmDescription=f&#39;Alert when S3 bucket {bucket_name} exceeds {threshold} objects&#39;,
+        Dimensions=[
+            {&#39;Name&#39;: &#39;BucketName&#39;, &#39;Value&#39;: bucket_name}
+        ]
+    )
+    print(f&quot;✅ Alarm created: {alarm_name}&quot;)
+
+# Run
+# รัน
+publish_s3_custom_metrics(&#39;my-data-bucket&#39;)
+create_s3_alarm(&#39;my-data-bucket&#39;, threshold=5000)
+</code></pre>
+<h3>ตัวอย่างที่ 8: สร้าง Lambda สำหรับส่ง Alert ไปยัง Email และ Teams</h3>
+<pre><code class="language-python"># Lambda Function: send-alert-notification.py
+# Lambda Function สำหรับส่งการแจ้งเตือนไปยัง Email และ Teams
+import boto3
+import json
+import urllib3
+from datetime import datetime
+
+http = urllib3.PoolManager()
+
+def send_email_via_ses(subject, message, recipient):
+    &quot;&quot;&quot;
+    Send email using AWS SES
+    ส่งอีเมลโดยใช้ AWS SES
+    &quot;&quot;&quot;
+    ses = boto3.client(&#39;ses&#39;)
+    
+    response = ses.send_email(
+        Source=&#39;alerts@your-domain.com&#39;,
+        Destination={&#39;ToAddresses&#39;: [recipient]},
+        Message={
+            &#39;Subject&#39;: {&#39;Data&#39;: subject},
+            &#39;Body&#39;: {&#39;Text&#39;: {&#39;Data&#39;: message}}
+        }
+    )
+    return response
+
+def send_teams_alert(webhook_url, alert_data):
+    &quot;&quot;&quot;
+    Send alert to Microsoft Teams
+    ส่ง alert ไปยัง Microsoft Teams
+    &quot;&quot;&quot;
+    teams_message = {
+        &quot;@type&quot;: &quot;MessageCard&quot;,
+        &quot;@context&quot;: &quot;http://schema.org/extensions&quot;,
+        &quot;themeColor&quot;: &quot;FF0000&quot; if alert_data[&#39;severity&#39;] == &#39;critical&#39; else &quot;FFA500&quot;,
+        &quot;title&quot;: f&quot;🚨 {alert_data[&#39;title&#39;]}&quot;,
+        &quot;text&quot;: alert_data[&#39;message&#39;],
+        &quot;sections&quot;: [
+            {
+                &quot;facts&quot;: [
+                    {&quot;name&quot;: &quot;Time&quot;, &quot;value&quot;: alert_data[&#39;timestamp&#39;]},
+                    {&quot;name&quot;: &quot;Service&quot;, &quot;value&quot;: alert_data[&#39;service&#39;]},
+                    {&quot;name&quot;: &quot;Details&quot;, &quot;value&quot;: alert_data[&#39;details&#39;]}
+                ]
+            }
+        ]
+    }
+    
+    response = http.request(
+        &#39;POST&#39;,
+        webhook_url,
+        body=json.dumps(teams_message),
+        headers={&#39;Content-Type&#39;: &#39;application/json&#39;}
+    )
+    return response.status
+
+def lambda_handler(event, context):
+    &quot;&quot;&quot;
+    Main Lambda handler for SNS notifications
+    ตัวจัดการหลัก Lambda สำหรับการแจ้งเตือนจาก SNS
+    &quot;&quot;&quot;
+    
+    # Parse SNS message
+    # แปลง SNS message
+    sns_message = json.loads(event[&#39;Records&#39;][0][&#39;Sns&#39;][&#39;Message&#39;])
+    
+    alert_data = {
+        &#39;title&#39;: sns_message.get(&#39;AlarmName&#39;, &#39;AWS Alert&#39;),
+        &#39;message&#39;: sns_message.get(&#39;AlarmDescription&#39;, &#39;No description&#39;),
+        &#39;severity&#39;: &#39;critical&#39; if &#39;80&#39; in sns_message.get(&#39;AlarmName&#39;, &#39;&#39;) else &#39;warning&#39;,
+        &#39;timestamp&#39;: datetime.now().isoformat(),
+        &#39;service&#39;: sns_message.get(&#39;AWSAccountId&#39;, &#39;Unknown&#39;),
+        &#39;details&#39;: sns_message.get(&#39;NewStateReason&#39;, &#39;No details&#39;)
+    }
+    
+    # Send to Email
+    # ส่งไปยังอีเมล
+    send_email_via_ses(
+        subject=f&quot;[{alert_data[&#39;severity&#39;].upper()}] {alert_data[&#39;title&#39;]}&quot;,
+        message=f&quot;Time: {alert_data[&#39;timestamp&#39;]}\nMessage: {alert_data[&#39;message&#39;]}\nDetails: {alert_data[&#39;details&#39;]}&quot;,
+        recipient=&#39;devops@example.com&#39;
+    )
+    
+    # Send to Teams
+    # ส่งไปยัง Teams
+    teams_webhook = &#39;https://your-domain.webhook.office.com/xxxxx&#39;
+    send_teams_alert(teams_webhook, alert_data)
+    
+    return {
+        &#39;statusCode&#39;: 200,
+        &#39;body&#39;: json.dumps(&#39;Alerts sent successfully&#39;)
+    }
+</code></pre>
+<hr>
+<h2>ตารางสรุปการตั้งค่า Alert</h2>
+<table>
+<thead>
+<tr>
+<th>Alert Type</th>
+<th>Threshold</th>
+<th>Evaluation</th>
+<th>Notification Channel</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>High CPU</td>
+<td>&gt;80%</td>
+<td>5 นาที</td>
+<td>Email + Teams</td>
+<td>ป้องกัน server overload</td>
+</tr>
+<tr>
+<td>Low Memory</td>
+<td>&lt;20%</td>
+<td>5 นาที</td>
+<td>Teams</td>
+<td>แจ้งเตือนก่อน out of memory</td>
+</tr>
+<tr>
+<td>S3 Bucket Size</td>
+<td>&gt;1TB</td>
+<td>1 ชั่วโมง</td>
+<td>Email</td>
+<td>ควบคุมค่าใช้จ่าย</td>
+</tr>
+<tr>
+<td>EC2 Status Check</td>
+<td>Failed</td>
+<td>1 นาที</td>
+<td>SMS + Teams</td>
+<td>ตรวจจับ instance down</td>
+</tr>
+<tr>
+<td>Network Out</td>
+<td>&gt;1Gbps</td>
+<td>5 นาที</td>
+<td>Teams</td>
+<td>แจ้ง traffic spike</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>แบบฝึกหัดท้ายบท</h2>
+<ol>
+<li>จงอธิบายขั้นตอนการติดตั้ง Grafana บน Ubuntu EC2</li>
+<li>จงเขียน IAM Policy สำหรับให้ Grafana อ่าน CloudWatch Metrics</li>
+<li>จงอธิบายวิธีการตั้ง Microsoft Teams Webhook</li>
+<li>จงเขียน Python เพื่อสร้าง CloudWatch Alarm สำหรับ CPU &gt; 85%</li>
+<li>จงอธิบายความแตกต่างระหว่าง Alert Rule ใน Grafana และ CloudWatch Alarm</li>
+<li>จงเขียน JSON สำหรับสร้าง Dashboard Panel แสดง CPU Utilization</li>
+<li>จงอธิบาย Alert Fatigue และวิธีแก้ไข</li>
+<li>จงเขียน Lambda เพื่อส่ง Alert ไปยัง Teams</li>
+<li>จงอธิบาย Custom Metrics และการนำไปใช้</li>
+<li>จงเขียน Script เพื่อส่ง Custom Metric (Object Count) ของ S3 ไปยัง CloudWatch</li>
+</ol>
+<h2>เฉลยแบบฝึกหัด</h2>
+<ol>
+<li>ติดตั้งผ่าน apt (Ubuntu): add repo → apt-get install grafana → systemctl start grafana-server</li>
+<li>Policy ต้องมี <code>cloudwatch:GetMetricData</code>, <code>cloudwatch:ListMetrics</code>, <code>ec2:DescribeInstances</code></li>
+<li>สร้าง Incoming Webhook ใน Teams Channel → ได้ URL → ใช้ใน Grafana หรือ Script</li>
+<li></li>
+</ol>
+<pre><code class="language-python">cloudwatch.put_metric_alarm(AlarmName=&#39;high-cpu&#39;, ComparisonOperator=&#39;GreaterThanThreshold&#39;, EvaluationPeriods=2, MetricName=&#39;CPUUtilization&#39;, Namespace=&#39;AWS/EC2&#39;, Period=300, Statistic=&#39;Average&#39;, Threshold=85, AlarmActions=[&#39;arn:aws:sns:...&#39;])
+</code></pre>
+<ol start="5">
+<li><strong>Grafana Alert</strong>: ทำงานภายใน Grafana, เงื่อนไขซับซ้อนได้ <strong>CloudWatch Alarm</strong>: Native, ส่งไป SNS ได้</li>
+<li></li>
+</ol>
+<pre><code class="language-json">{&quot;targets&quot;: [{&quot;namespace&quot;: &quot;AWS/EC2&quot;, &quot;metricName&quot;: &quot;CPUUtilization&quot;}], &quot;fieldConfig&quot;: {&quot;defaults&quot;: {&quot;unit&quot;: &quot;percent&quot;}}}
+</code></pre>
+<ol start="7">
+<li>Alert Fatigue เกิดจาก Alert มากเกินไป แก้โดยตั้ง threshold ให้เหมาะสม, ใช้ grouping, ใช้ severity level</li>
+<li>ใช้ <code>urllib3</code> POST ไปยัง Teams Webhook ด้วย JSON payload แบบ Adaptive Card</li>
+<li>Custom Metrics คือ Metrics ที่เราส่งเอง เหมาะกับข้อมูลเฉพาะ เช่น S3 object count, queue length</li>
+<li>ใช้ <code>cloudwatch.put_metric_data</code> ใส่ Namespace=&#39;Custom/S3&#39;, MetricName=&#39;ObjectCount&#39;, Value=count</li>
+</ol>
+<h2>แหล่งอ้างอิง</h2>
+<ul>
+<li>Grafana Documentation: <a href="https://grafana.com/docs/">https://grafana.com/docs/</a></li>
+<li>Grafana CloudWatch Data Source: <a href="https://grafana.com/docs/grafana/latest/datasources/aws-cloudwatch/">https://grafana.com/docs/grafana/latest/datasources/aws-cloudwatch/</a></li>
+<li>Microsoft Teams Webhook: <a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook">https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook</a></li>
+<li>AWS CloudWatch: <a href="https://docs.aws.amazon.com/cloudwatch/">https://docs.aws.amazon.com/cloudwatch/</a></li>
+<li>Boto3 CloudWatch: <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudwatch.html">https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudwatch.html</a></li>
+</ul>
+<hr>
+<p><strong>หมายเหตุ:</strong> โค้ดทุกตัวอย่างสามารถนำไปรันได้จริง แต่ต้องปรับเปลี่ยนตาม Environment ของคุณ (Region, Bucket Name, Instance ID, ARN, Webhook URL)</p>
+
+</div>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

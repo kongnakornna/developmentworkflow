@@ -1,0 +1,13 @@
+ออกแบบ Clean Architecture สำหรับ [ระบบ]
+แยกชั้น:
+1. Entities
+2. Use Cases
+3. Interface Adapters
+4. Frameworks & Drivers
+
+ข้อกำหนด:
+- Dependency Rule
+- แยก Business Logic ออกจาก Database / Framework / UI
+- วิธีทดสอบ
+- วิธีเปลี่ยนเทคโนโลยีโดยกระทบน้อยที่สุด
+- ข้อดี/ข้อเสีย

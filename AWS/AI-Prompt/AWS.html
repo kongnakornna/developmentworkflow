@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/styles/github.min.css">
+<style>
+
+/* Base */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #24292e;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.markdown-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 32px 64px;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #24292e;
+}
+
+h1 {
+  font-size: 1.8em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h2 {
+  font-size: 1.5em;
+  letter-spacing: -0.01em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h3 { font-size: 1.25em; }
+h4 { font-size: 1.1em; }
+h5 { font-size: 1em; }
+
+h6 {
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #656d76;
+}
+
+/* Paragraphs */
+p {
+  margin: 16px 0;
+}
+
+/* Inline */
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+del {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+code {
+  font-family: "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9em;
+  background-color: #eff1f3;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #24292e;
+}
+
+a {
+  color: #0969da;
+  text-decoration: underline;
+  text-decoration-skip-ink: auto;
+  text-underline-offset: 3px;
+}
+
+a:hover { opacity: 0.8; }
+
+/* Blockquotes */
+blockquote {
+  margin: 16px 0;
+  padding: 0 1em;
+  border-left: 3px solid #d0d7de;
+  color: #656d76;
+}
+
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Lists */
+ul, ol {
+  padding-left: 2em;
+  margin: 16px 0;
+}
+
+li { margin: 4px 0; }
+ul ul, ul ol, ol ul, ol ol { margin: 0; }
+li > p { margin: 0; }
+
+input[type="checkbox"] {
+  margin-right: 0.5em;
+  accent-color: #0969da;
+}
+
+/* Code Blocks */
+pre {
+  background-color: #f6f8fa;
+  padding: 16px;
+  border-radius: 6px;
+  overflow: auto;
+  font-family: "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9em;
+  line-height: 1.45;
+  margin: 16px 0;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  display: block;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  margin: 16px 0;
+  width: auto;
+  max-width: 100%;
+  overflow: auto;
+  display: block;
+}
+
+th, td {
+  padding: 8px 12px;
+  border: 1px solid #d0d7de;
+  text-align: left;
+}
+
+th {
+  font-weight: 600;
+  background-color: #f6f8fa;
+}
+
+tr:nth-child(even) td {
+  background-color: #f6f8fa;
+}
+
+/* Horizontal Rule */
+hr {
+  border: none;
+  border-top: 1px solid #d0d7de;
+  margin: 24px 0;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Math (KaTeX MathML) */
+.math-block {
+  display: block;
+  text-align: center;
+  margin: 16px 0;
+  padding: 8px 0;
+  overflow-x: auto;
+}
+
+.math-inline {
+  display: inline;
+}
+
+.math-error {
+  color: #cf222e;
+  background-color: rgba(207, 34, 46, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+/* Mermaid */
+pre.mermaid {
+  background-color: transparent;
+  text-align: center;
+  border: none;
+  padding: 16px 0;
+}
+
+/* Footnotes */
+.footnotes-section {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid #d0d7de;
+  font-size: 0.9em;
+  color: #656d76;
+}
+
+.footnotes-section ol {
+  padding-left: 1.5em;
+}
+
+.footnotes-section li {
+  margin: 8px 0;
+}
+
+sup.footnote-ref a {
+  color: #0969da;
+  text-decoration: none;
+  font-size: 0.85em;
+  padding: 0 2px;
+}
+
+sup.footnote-ref a:hover {
+  text-decoration: underline;
+}
+
+a.footnote-backref {
+  color: #0969da;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+/* Details/Summary */
+details {
+  margin: 8px 0;
+  border-left: 2px solid rgba(128, 128, 128, 0.3);
+  padding-left: 12px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 4px 0;
+  color: #24292e;
+}
+
+summary:hover {
+  color: #0969da;
+}
+
+/* Print */
+@media print {
+  body { background: white; }
+  .markdown-body { max-width: none; padding: 0; }
+  pre { white-space: pre-wrap; word-wrap: break-word; }
+  a { color: #24292e; text-decoration: underline; }
+  pre.mermaid { page-break-inside: avoid; }
+}
+
+</style>
+</head>
+<body>
+<div class="markdown-body">
+<p>ผู้เขียนหนังสือ  คงนคร จันทะคุณ 
+จงเขียนหนังสือเรื่อง &quot;AWS จากภาคทฤษฎีไปภาคปฎิบัติ&quot;</p>
+<p>ข้อกำหนดหลัก:</p>
+<ul>
+<li>เนื้อหา 2 ภาษา ภาษาไทย หัก  และ ภาษาอังถถษ ภาษเสริม แยกส่วน</li>
+</ul>
+<p>ขอบเขต การเขียนหนังสือ</p>
+<ul>
+<li>DevOPS คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>DevSecOps  คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>AI คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>Data Engineer คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>software engineer  คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>AWS  คือใคร , ให้บริการอะไร ,คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>AWS Core Services  คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>AWS Certified คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>AWS Certified Solutions Architect – Associate</li>
+<li>AWS Certified Cloud Practitioner</li>
+<li>AWS Certified Developer – Associate</li>
+<li>AWS Certified Solutions Architect – Professional</li>
+<li>AWS Certified Machine Learning – Specialty</li>
+<li>AWS Certified AI Practitioner</li>
+<li>AWS Certified Advanced Networking – Specialty</li>
+<li>AWS Certified Data Engineer – Associate</li>
+<li>AWS Certified Solutions Architect – Associate</li>
+<li>AWS Certified Cloud Practitioner</li>
+<li>AWS Certified Developer – Associate</li>
+<li>AWS Certified Solutions Architect – Professional</li>
+<li>AWS Certified DevOps Engineer – Professional</li>
+</ul>
+<p>ข้อกำหนดรอง:
+  -สาร้งสารบัญ</p>
+<ul>
+<li>DevOPS คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>DevSecOps  คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>AI คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>Data Engineer คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>software engineer  คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>AWS  คือใคร , ให้บริการอะไร ,คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>AWS Core Services  คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>AWS Certified คืออะไร ,มีกี่แบบ,ใช้อย่างไร ,นำในกรณีไหน,ทำไม่ต้องใช้ ,ประโยชน์ที่ได้รับ ,สรุป</li>
+<li>AWS Certified Solutions Architect – Associate</li>
+<li>AWS Certified Cloud Practitioner</li>
+<li>AWS Certified Developer – Associate</li>
+<li>AWS Certified Solutions Architect – Professional</li>
+<li>AWS Certified Machine Learning – Specialty</li>
+<li>AWS Certified AI Practitioner</li>
+<li>AWS Certified Advanced Networking – Specialty</li>
+<li>AWS Certified Data Engineer – Associate</li>
+<li>AWS Certified Solutions Architect – Associate</li>
+<li>AWS Certified Cloud Practitioner</li>
+<li>AWS Certified Developer – Associate</li>
+<li>AWS Certified Solutions Architect – Professional</li>
+<li>AWS Certified DevOps Engineer – Professional</li>
+</ul>
+<ol>
+<li>แต่ละบทไม่จำกัดความยาว เน้นความสมบูนณ์ของเนื้อหา<ul>
+<li>โครงสร้างการทำงาน</li>
+<li>วัตุประสงค์ แบบสั้นสำหรับ ทบทวน </li>
+<li>กลุ่มเป้าหมาย</li>
+<li>ความรู้พื้นฐาน</li>
+<li>เนื้อหา โดยย่อ กระชับ เน้น วัตถุประสงค์  ประโยชน์ของการใช้</li>
+<li>บทนำ</li>
+<li>บทนิยาม</li>
+<li>ออกแบบ workflow<ul>
+<li>วาดรูป dataflow สร้าง รูปแบบ dataflow เหมือนจริง ลักษณะ flowchart   เพื่ออธิบายกระบวนการ ทำความเข้าใจ</li>
+<li>พร้อมอธิบาย แบบ ละเอียด </li>
+<li>คอมเม้น code ภาษาไทย และ ภาษาอังถถษ อธิบาย การทำงาน แต่ละจุด</li>
+<li>ยกตัวอย่างการใช้งานจริง หรือ กรณีศึกษา แนวทางแก้ไขปัญหา ที่อาจจะเกิดขึ้น</li>
+<li>เทมเพลต และ ตัวอย่างโค้ด พร้อมนำไป run ได้ทันที  มีคำอธิบายการใช้งานแต่ละจุด การคอมเม้น</li>
+</ul>
+</li>
+<li>สรุป
+ -ประโยชน์ที่ได้รับ
+ -ข้อควรระวัง
+ -ข้อดี
+ -ข้อเสีย
+-ข้อห้าม ถ้ามี
+-ตัวอย่างโค้ดที่รันได้จริง</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>การออกแบบ Workflow และ Dataflow ภาพหลัการทำงาน</li>
+<li>การคอมเม้น โค้ด ใช้ 2 ภาษา อังกถษ และ ภาษาไทย คนละบรรทัด</li>
+</ul>
+<ol start="2">
+<li>ทุกบทต้องประกอบด้วย:<ul>
+<li>คำอธิบายแนวคิด (Concept Explanation)</li>
+<li>ตัวอย่างโค้ดที่รันได้จริง (Runnable Code Example)</li>
+<li>ตารางสรุป (ถ้ามีการเปรียบเทียบ)</li>
+<li>แบบฝึกหัดท้ายบท 2–10 ข้อ </li>
+<li>เฉลยแบบฝึกหัดท้ายบท</li>
+<li>ส่วน &quot;แหล่งอ้างอิง&quot; ท้ายบท (References)</li>
+</ul>
+</li>
+<li>บทที่มีการออกแบบ Workflow, Task List, Checklist, Dataflow Diagram ให้:<ul>
+<li>แสดงเทมเพลตเป็น Markdown Table หรือลิงก์ดาวน์โหลด</li>
+<li>อธิบายวิธีการใช้งานแต่ละจุด (step-by-step)</li>
+<li>แทรกรูปภาพโดยระบุเป็น &quot;รูปที่ X: คำอธิบาย&quot;</li>
+</ul>
+</li>
+<li>สำหรับบทที่เกี่ยวข้องกับ Draw.io: ให้อธิบายวิธีการวาด Flowchart แบบ Top-to-Bottom (TB) พร้อมแสดงตัวอย่างโค้ด Mermaid หรือ ASCII flowchart</li>
+<li>ใช้ภาษาไทยที่เป็นทางการ แต่เข้าใจง่ายและมีภาษอังถถษจุดสำคัญเสริม ไม่ใช้ศัพท์เทคนิคที่ซับซ้อนเกินไปโดยไม่มีการอธิบาย
+5.หากใช้ศัพท์เทคนิค ต้องอธิบายความหมาย หลัการทำงาน วิธีการสำไปประยุตใช้<br>ไม่จำกัดความยาว เน้นความสมบูนณ์ของเนื้อหา  มี สรุปสั้น ก่อน เนื้อหา แต่ละส่วน  มีหัวหนหัวข้อสำคัญ
+คืออะไร
+มีกี่แบบ
+ใช้อย่างไร นำในกรณีไหน ทำไม่ต้องใช้ ประโยชน์ที่ได้รับ 
+-ประโยชน์ที่ได้รับ
+-ข้อควรระวัง
+-ข้อดี
+-ข้อเสีย
+-ข้อห้าม ถ้ามี</li>
+</ol>
+<h1>ร่าง</h1>
+<hr>
+<h1>📘 สารบัญ (Table of Contents)</h1>
+<p><strong>หนังสือ “AWS จากภาคทฤษฎีไปภาคปฏิบัติ”</strong><br><em>“AWS From Theory to Practice”</em></p>
+<table>
+<thead>
+<tr>
+<th>บทที่</th>
+<th>หัวข้อ</th>
+<th>หน้า</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>DevOps: แนวคิด การใช้งาน และการปฏิบัติบน AWS</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>DevSecOps: รวมความปลอดภัยในวงจรพัฒนา</td>
+<td>35</td>
+</tr>
+<tr>
+<td>3</td>
+<td>AI: ปัญญาประดิษฐ์บน AWS</td>
+<td>70</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Data Engineer: วิศวกรรมข้อมูลยุคคลาวด์</td>
+<td>110</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Software Engineer: วิศวกรรมซอฟต์แวร์บน AWS</td>
+<td>150</td>
+</tr>
+<tr>
+<td>6</td>
+<td>AWS คือใคร? บริการและรูปแบบการใช้งาน</td>
+<td>190</td>
+</tr>
+<tr>
+<td>7</td>
+<td>AWS Core Services: หัวใจของคลาวด์</td>
+<td>225</td>
+</tr>
+<tr>
+<td>8</td>
+<td>AWS Certified: เส้นทางสู่การรับรอง</td>
+<td>260</td>
+</tr>
+<tr>
+<td>9</td>
+<td>AWS Certified Solutions Architect – Associate (SAA)</td>
+<td>290</td>
+</tr>
+<tr>
+<td>10</td>
+<td>AWS Certified Cloud Practitioner (CLF)</td>
+<td>320</td>
+</tr>
+<tr>
+<td>11</td>
+<td>AWS Certified Developer – Associate (DVA)</td>
+<td>345</td>
+</tr>
+<tr>
+<td>12</td>
+<td>AWS Certified Solutions Architect – Professional (SAP)</td>
+<td>375</td>
+</tr>
+<tr>
+<td>13</td>
+<td>AWS Certified Machine Learning – Specialty (MLS)</td>
+<td>405</td>
+</tr>
+<tr>
+<td>14</td>
+<td>AWS Certified AI Practitioner (AIF)</td>
+<td>435</td>
+</tr>
+<tr>
+<td>15</td>
+<td>AWS Certified Advanced Networking – Specialty (ANS)</td>
+<td>460</td>
+</tr>
+<tr>
+<td>16</td>
+<td>AWS Certified Data Engineer – Associate (DEA)</td>
+<td>490</td>
+</tr>
+<tr>
+<td>17</td>
+<td>AWS Certified DevOps Engineer – Professional (DOP)</td>
+<td>520</td>
+</tr>
+<tr>
+<td>ภาคผนวก</td>
+<td>เทมเพลต โค้ดตัวอย่าง และเฉลยแบบฝึกหัด</td>
+<td>550</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>หมายเหตุ:</strong> ทุกบทจะประกอบด้วยเนื้อหาทั้งภาษาไทยและภาษาอังกฤษแยกส่วน, แบบฝึกหัด, เฉลย, โค้ดที่รันได้จริง, Workflow พร้อม Mermaid/ASCII, และตารางสรุป</p>
+</blockquote>
+<hr>
+<h1>📖 ตัวอย่างบทที่สมบูรณ์: บทที่ 1 – DevOps</h1>
+<h2>ส่วนภาษาไทย (Thai Section)</h2>
+<hr>
+<h3>1.1 สรุปสั้นก่อนอ่าน (Executive Summary)</h3>
+<blockquote>
+<p><strong>DevOps</strong> คือการรวมทีมพัฒนา (Dev) และปฏิบัติการ (Ops) เข้าด้วยกันผ่านระบบอัตโนมัติ วัฒนธรรม และเครื่องมือ ช่วยให้ส่งซอฟต์แวร์ได้เร็ว เสถียร และปลอดภัยขึ้น บน AWS ใช้บริการ เช่น CodePipeline, CodeBuild, CodeDeploy</p>
+</blockquote>
+<hr>
+<h3>1.2 DevOps คืออะไร</h3>
+<p>DevOps ย่อมาจาก <strong>Development (Dev)</strong> และ <strong>Operations (Ops)</strong> คือแนวคิดและวัฒนธรรมที่มุ่งลดรอยต่อระหว่างนักพัฒนาซอฟต์แวร์และทีมดูแลระบบ โดยใช้ระบบอัตโนมัติ (Automation) และการวัดผล (Monitoring) เพื่อให้สามารถส่งมอบซอฟต์แวร์ได้อย่างรวดเร็ว สม่ำเสมอ และเชื่อถือได้</p>
+<hr>
+<h3>1.3 DevOps มีกี่แบบ</h3>
+<p>DevOps ไม่ใช่ “เวอร์ชัน” แต่มี <strong>รูปแบบการนำไปใช้ (Models)</strong> ที่พบบ่อย:</p>
+<table>
+<thead>
+<tr>
+<th>รูปแบบ</th>
+<th>คำอธิบาย</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1. Cultural DevOps</td>
+<td>เน้นการปรับเปลี่ยนวัฒนธรรมองค์กร การทำงานร่วมกัน</td>
+</tr>
+<tr>
+<td>2. Toolchain DevOps</td>
+<td>ใช้เครื่องมือ CI/CD, IaC, Monitoring</td>
+</tr>
+<tr>
+<td>3. Cloud-Native DevOps</td>
+<td>ใช้คลาวด์ (เช่น AWS) เป็นฐานของ Automation</td>
+</tr>
+<tr>
+<td>4. Hybrid DevOps</td>
+<td>ผสม On-premise และ Cloud</td>
+</tr>
+</tbody></table>
+<p>บน AWS นิยมใช้ <strong>Cloud-Native DevOps</strong> มากที่สุด</p>
+<hr>
+<h3>1.4 ใช้อย่างไร (How to Use) – นำไปใช้ในกรณีไหน</h3>
+<p><strong>กรณีที่ควรใช้ DevOps:</strong></p>
+<ul>
+<li>ต้องการปล่อยอัปเดตซอฟต์แวร์บ่อย (หลายครั้งต่อวัน)</li>
+<li>มีปัญหาการทำงานคนละทีมระหว่าง Dev และ Ops</li>
+<li>ต้องการลดความผิดพลาดจากการทำ Manual</li>
+<li>ต้องการกู้คืนระบบเร็วเมื่อเกิดปัญหา</li>
+</ul>
+<p><strong>กรณีที่ไม่ต้องใช้:</strong></p>
+<ul>
+<li>โปรเจกต์เล็ก ๆ ที่ปล่อยปีละครั้ง</li>
+<li>องค์กรไม่มีงบหรือเวลาปรับเปลี่ยนวัฒนธรรม</li>
+<li>ระบบที่ไม่ต้องการความยืดหยุ่นสูง</li>
+</ul>
+<hr>
+<h3>1.5 ประโยชน์ที่ได้รับ</h3>
+<table>
+<thead>
+<tr>
+<th>ประโยชน์</th>
+<th>คำอธิบาย</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>เร็วขึ้น (Speed)</td>
+<td>ลดเวลา deploy จากสัปดาห์เหลือชั่วโมง</td>
+</tr>
+<tr>
+<td>เสถียรขึ้น (Reliability)</td>
+<td>Automation ลด error</td>
+</tr>
+<tr>
+<td>ปลอดภัยขึ้น (Security)</td>
+<td>ตรวจสอบได้ทุกขั้นตอน</td>
+</tr>
+<tr>
+<td>คืนทุนเร็ว (Recovery)</td>
+<td>Rollback อัตโนมัติ</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>1.6 บทนำ (Introduction)</h3>
+<p>ในยุคที่ธุรกิจต้องการความรวดเร็ว DevOps จึงกลายเป็นหัวใจสำคัญของวงการซอฟต์แวร์ บทนี้จะพาคุณเข้าใจ DevOps ตั้งแต่พื้นฐาน ไปจนถึงการลงมือปฏิบัติจริงบน AWS พร้อมโค้ดและ Workflow ที่ใช้ได้จริง</p>
+<hr>
+<h3>1.7 บทนิยาม (Definitions)</h3>
+<table>
+<thead>
+<tr>
+<th>ศัพท์</th>
+<th>ความหมาย</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CI (Continuous Integration)</td>
+<td>รวมโค้ดบ่อย ๆ แล้ว build/test อัตโนมัติ</td>
+</tr>
+<tr>
+<td>CD (Continuous Delivery/Deployment)</td>
+<td>ส่งโค้ดไป production อัตโนมัติหรือ manual</td>
+</tr>
+<tr>
+<td>IaC (Infrastructure as Code)</td>
+<td>จัดการโครงสร้างพื้นฐานด้วยโค้ด เช่น CloudFormation</td>
+</tr>
+<tr>
+<td>Pipeline</td>
+<td>ชุดขั้นตอนอัตโนมัติตั้งแต่ commit → deploy</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>1.8 การออกแบบ Workflow และ Dataflow</h3>
+<h4>รูปที่ 1.1: Dataflow ของ DevOps Pipeline บน AWS (Mermaid)</h4>
+<pre><code class="language-mermaid">graph TD
+    A[Developer Push Code to AWS CodeCommit] --&gt; B[AWS CodeBuild: Build &amp; Test]
+    B --&gt; C{Test Pass?}
+    C --&gt;|Yes| D[AWS CodeDeploy to EC2]
+    C --&gt;|No| E[Notify Fail &amp; Rollback]
+    D --&gt; F[AWS CloudWatch Monitor]
+    F --&gt; G[Auto Scaling if needed]
+</code></pre>
+<h4>คำอธิบายแบบละเอียด</h4>
+<ol>
+<li><strong>Developer Push Code</strong> – นักพัฒนาส่งโค้ดไปยัง Git repository (AWS CodeCommit หรือ GitHub)</li>
+<li><strong>CodeBuild</strong> – ดึงโค้ด, รัน build, รัน unit test</li>
+<li><strong>Decision</strong> – ถ้า test ผ่าน → deploy; ถ้าไม่ผ่าน → แจ้งเตือน</li>
+<li><strong>CodeDeploy</strong> – ติดตั้งแอปพลิเคชันบน EC2, ECS หรือ Lambda</li>
+<li><strong>CloudWatch</strong> – เก็บ log, metrics, สร้าง alarm</li>
+<li><strong>Auto Scaling</strong> – ปรับจำนวนเครื่องตาม traffic อัตโนมัติ</li>
+</ol>
+<hr>
+<h3>1.9 ตัวอย่างโค้ดที่รันได้จริง (Runnable Code)</h3>
+<p><strong>โค้ด buildspec.yml สำหรับ AWS CodeBuild</strong><br>(คอมเมนต์ 2 ภาษา)</p>
+<pre><code class="language-yaml">version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo &quot;Installing dependencies...&quot;   # ติดตั้ง dependencies
+      - npm install
+  pre_build:
+    commands:
+      - echo &quot;Running tests...&quot;             # รันการทดสอบ
+      - npm test
+  build:
+    commands:
+      - echo &quot;Building application...&quot;      # สร้างแอป
+      - npm run build
+  post_build:
+    commands:
+      - echo &quot;Build completed on `date`&quot;    # สร้างเสร็จแล้ว
+artifacts:
+  files:
+    - &#39;**/*&#39;
+  base-directory: &#39;build&#39;
+</code></pre>
+<p><strong>วิธีรัน:</strong> อัปโหลดไฟล์นี้ไปยัง S3 หรือใส่ใน CodeBuild project โดยตรง</p>
+<hr>
+<h3>1.10 กรณีศึกษา (Case Study) + แนวทางแก้ไขปัญหา</h3>
+<p><strong>กรณีศึกษา:</strong> บริษัท E-Commerce มีปัญหา deploy แล้วเว็บล่มบ่อย<br><strong>สาเหตุ:</strong> ไม่มี CI/CD, deploy manual, ไม่มี rollback plan<br><strong>แนวทางแก้ไข:</strong>  </p>
+<ul>
+<li>สร้าง Pipeline ด้วย CodePipeline + CodeBuild + CodeDeploy  </li>
+<li>ใช้ Deployment Group แบบ Blue/Green  </li>
+<li>ตั้ง CloudWatch Alarm + SNS แจ้งเตือน<br><strong>ผลลัพธ์:</strong> ลด downtime จาก 5 ชั่วโมง/เดือนเหลือ 15 นาที</li>
+</ul>
+<hr>
+<h3>1.11 เทมเพลตและ Checklist สำหรับ DevOps บน AWS</h3>
+<table>
+<thead>
+<tr>
+<th>ขั้นตอน</th>
+<th>รายการ</th>
+<th>เสร็จแล้ว?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>สร้าง CodeCommit repo</td>
+<td>[ ]</td>
+</tr>
+<tr>
+<td>2</td>
+<td>เขียน buildspec.yml</td>
+<td>[ ]</td>
+</tr>
+<tr>
+<td>3</td>
+<td>สร้าง CodeBuild project</td>
+<td>[ ]</td>
+</tr>
+<tr>
+<td>4</td>
+<td>สร้าง CodePipeline</td>
+<td>[ ]</td>
+</tr>
+<tr>
+<td>5</td>
+<td>กำหนด CodeDeploy group</td>
+<td>[ ]</td>
+</tr>
+<tr>
+<td>6</td>
+<td>ตั้ง CloudWatch dashboard</td>
+<td>[ ]</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>1.12 สรุป (Conclusion)</h3>
+<h4>ประโยชน์ที่ได้รับ</h4>
+<ul>
+<li>ส่งซอฟต์แวร์เร็วขึ้น 10 เท่า</li>
+<li>ลดความผิดพลาดจากมนุษย์</li>
+<li>สามารถกู้คืนระบบได้ในไม่กี่นาที</li>
+</ul>
+<h4>ข้อควรระวัง</h4>
+<ul>
+<li>ต้องเปลี่ยนวัฒนธรรมองค์กร ไม่งั้นล้มเหลว</li>
+<li>ค่าใช้จ่าย AWS เพิ่ม (CodePipeline, CodeBuild)</li>
+<li>ต้องมีทักษะ Automation และ scripting</li>
+</ul>
+<h4>ข้อดี</h4>
+<ul>
+<li>ความโปร่งใสในการ deploy</li>
+<li>รองรับการขยายตัว (Scalability)</li>
+</ul>
+<h4>ข้อเสีย</h4>
+<ul>
+<li>เรียนรู้ในช่วงแรกอาจซับซ้อน</li>
+<li>ต้องดูแล Pipeline ให้ stable</li>
+</ul>
+<h4>ข้อห้าม</h4>
+<ul>
+<li>ห้าม deploy โดยไม่ผ่าน Pipeline (break the pipeline)</li>
+<li>ห้ามเก็บ secret ใน buildspec.yml หรือ code (ใช้ Parameter Store หรือ Secrets Manager)</li>
+</ul>
+<hr>
+<h3>1.13 แบบฝึกหัดท้ายบท (Exercises)</h3>
+<ol>
+<li>จงอธิบายความหมายของ CI และ CD อย่างสั้น</li>
+<li>ยกตัวอย่าง AWS service 3 ตัวที่ใช้ใน DevOps</li>
+<li>ทำไม DevOps ถึงลดความผิดพลาดจากการทำงาน manual</li>
+<li>Blue/Green deployment คืออะไร</li>
+<li>ถ้า test ไม่ผ่าน ควรทำอย่างไรใน Pipeline</li>
+<li>จงเขียน buildspec.yml อย่างง่ายสำหรับ Python app</li>
+<li>AWS CodeCommit ใช้ทำอะไร</li>
+<li>CloudWatch ใช้ประโยชน์อย่างไรใน DevOps</li>
+<li>ข้อห้ามสำคัญของการใช้ DevOps คืออะไร</li>
+<li>จงบอกประโยชน์ 2 ข้อของ Infrastructure as Code</li>
+</ol>
+<hr>
+<h3>1.14 เฉลยแบบฝึกหัด (Answer Key)</h3>
+<ol>
+<li>CI = รวมโค้ดบ่อย+test; CD = ส่งไป production อัตโนมัติ  </li>
+<li>CodeBuild, CodeDeploy, CodePipeline  </li>
+<li>เพราะทุกขั้นตอนเป็นอัตโนมัติ ไม่ต้องกดเอง  </li>
+<li>การ deploy สอง environment แล้ว switch traffic ทันที  </li>
+<li>หยุด pipeline, แจ้งเตือน, rollback  </li>
+<li><code>version: 0.2; phases: install: commands: pip install -r requirements.txt</code>  </li>
+<li>Git repository บน AWS  </li>
+<li>เก็บ log, วัด performance, alert  </li>
+<li>ห้าม deploy bypass pipeline  </li>
+<li>จัดการเวอร์ชัน infrastructure, deploy ซ้ำได้</li>
+</ol>
+<hr>
+<h3>1.15 แหล่งอ้างอิง (References)</h3>
+<ul>
+<li>AWS DevOps Guide: <a href="https://aws.amazon.com/devops/">https://aws.amazon.com/devops/</a></li>
+<li>“The DevOps Handbook” – Gene Kim et al.</li>
+<li>AWS Documentation: CodePipeline, CodeBuild</li>
+</ul>
+<hr>
+<h2>ส่วนภาษาอังกฤษ (English Section)</h2>
+<p><em>(เนื้อหาเดียวกันแต่แปลและปรับให้เข้ากับบริบทสากล เพื่อความสมบูรณ์ของหนังสือ “2 languages separate section”)</em></p>
+<h3>Chapter 1 – DevOps</h3>
+<h4>1.1 Executive Summary</h4>
+<blockquote>
+<p><strong>DevOps</strong> unifies Development and Operations through automation, culture, and tools, enabling faster, stable, and secure software delivery. On AWS, use services like CodePipeline, CodeBuild, CodeDeploy.</p>
+</blockquote>
+<h4>1.2 What is DevOps?</h4>
+<p>DevOps is a cultural and technical movement that breaks down silos between developers and system administrators, emphasizing automation and measurement to deliver software rapidly and reliably.</p>
+<h4>1.3 How many types of DevOps?</h4>
+<p>Four common implementation models:</p>
+<ol>
+<li>Cultural DevOps – focus on collaboration</li>
+<li>Toolchain DevOps – CI/CD, IaC, monitoring</li>
+<li>Cloud-Native DevOps – AWS-based automation</li>
+<li>Hybrid DevOps – mix on-prem and cloud</li>
+</ol>
+<h4>1.4 When to use? When NOT to use?</h4>
+<p><strong>Use when:</strong> frequent releases, team friction, manual errors, need fast recovery.<br><strong>Avoid when:</strong> very small project with yearly release, no budget for cultural change.</p>
+<h4>1.5 Benefits</h4>
+<table>
+<thead>
+<tr>
+<th>Benefit</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Speed</td>
+<td>hours instead of weeks</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>less human error</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>auditable pipeline</td>
+</tr>
+<tr>
+<td>Recovery</td>
+<td>automated rollback</td>
+</tr>
+</tbody></table>
+<h4>1.6 Introduction <em>(similar to Thai)</em></h4>
+<h4>1.7 Definitions</h4>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CI</td>
+<td>Merge often, auto build/test</td>
+</tr>
+<tr>
+<td>CD</td>
+<td>Auto or manual deploy</td>
+</tr>
+<tr>
+<td>IaC</td>
+<td>Manage infra via code</td>
+</tr>
+<tr>
+<td>Pipeline</td>
+<td>automated steps from commit to deploy</td>
+</tr>
+</tbody></table>
+<h4>1.8 Workflow &amp; Dataflow Diagram</h4>
+<p>Same Mermaid diagram as in Thai section (Figure 1.1)<br>Explanation identical.</p>
+<h4>1.9 Runnable Code Example</h4>
+<p>Same <code>buildspec.yml</code> with bilingual comments (Thai/English already provided).</p>
+<h4>1.10 Case Study</h4>
+<p>Same e-commerce case study translated.</p>
+<h4>1.11 Checklist Template (identical table)</h4>
+<h4>1.12 Conclusion</h4>
+<p><strong>Benefits:</strong> faster delivery, fewer errors, fast recovery.<br><strong>Cautions:</strong> cultural change, extra AWS cost, scripting skills needed.<br><strong>Pros:</strong> transparency, scalability.<br><strong>Cons:</strong> initial complexity, pipeline maintenance.<br><strong>Prohibitions:</strong> never bypass the pipeline, never store secrets in code.</p>
+<h4>1.13 Exercises (translated)</h4>
+<h4>1.14 Answer Key</h4>
+<h4>1.15 References</h4>
+<hr>
+
+</div>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>
