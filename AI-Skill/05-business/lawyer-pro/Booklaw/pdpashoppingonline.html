@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตัวอย่าง คู่มือปฏิบัติตาม PDPA สำหรับร้านค้าออนไลน์ โดย ทนาย คงนคร จันทะคุณ 0955088091 </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sarabun', 'Prompt', 'TH Sarabun New', system-ui, sans-serif;
+            background: #f0f4f9;
+            padding: 30px 20px;
+            color: #1e293b;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 20, 50, 0.10);
+            padding: 48px 44px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* watermarked "TEMPLATE" */
+        .container::before {
+            content: "TEMPLATE";
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            font-size: 180px;
+            font-weight: 800;
+            color: rgba(200, 210, 220, 0.12);
+            transform: rotate(15deg);
+            pointer-events: none;
+            letter-spacing: 10px;
+            z-index: 0;
+        }
+
+        .badge-draft {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            border: 1px solid #f59e0b;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .disclaimer-box {
+            background: #fef2f2;
+            border-left: 6px solid #dc2626;
+            padding: 20px 26px;
+            border-radius: 12px;
+            margin: 20px 0 32px 0;
+            font-size: 0.95rem;
+            color: #7f1d1d;
+        }
+        .disclaimer-box strong {
+            color: #b91c1c;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+            letter-spacing: -0.02em;
+            position: relative;
+            z-index: 1;
+        }
+        .subhead {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-top: 6px;
+            border-bottom: 3px solid #e2e8f0;
+            padding-bottom: 18px;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+
+        .toc {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px 28px;
+            margin: 28px 0 36px 0;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 1;
+        }
+        .toc h3 {
+            font-size: 1.05rem;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+        .toc-grid {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 8px 18px;
+            font-size: 0.98rem;
+            align-items: baseline;
+        }
+        .toc-grid .part {
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .toc-grid .target {
+            color: #64748b;
+            font-size: 0.85rem;
+            justify-self: end;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-top: 44px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #dbeafe;
+            padding-bottom: 6px;
+            position: relative;
+            z-index: 1;
+        }
+        .section-sub {
+            color: #475569;
+            font-weight: 400;
+            font-size: 0.95rem;
+            margin-top: -6px;
+            margin-bottom: 18px;
+            font-style: italic;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 28px 0 10px 0;
+            color: #1e293b;
+        }
+
+        h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 20px 0 6px 0;
+            color: #1e293b;
+        }
+
+        p {
+            margin: 0 0 14px 0;
+        }
+
+        ul, ol {
+            margin: 8px 0 16px 24px;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 16px 0 24px 0;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            background: #fafcff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            min-width: 600px;
+        }
+        th {
+            background: #eef2ff;
+            color: #1e293b;
+            font-weight: 600;
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 2px solid #c7d2fe;
+        }
+        td {
+            padding: 13px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .consent-card {
+            background: #f8fafc;
+            border: 2px dashed #94a3b8;
+            border-radius: 20px;
+            padding: 24px 30px;
+            margin: 16px 0 20px 0;
+            font-family: 'Sarabun', 'Prompt', sans-serif;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .consent-card pre {
+            font-family: inherit;
+            white-space: pre-wrap;
+            font-size: 0.98rem;
+            margin: 0;
+            line-height: 1.8;
+            color: #0f172a;
+        }
+
+        .principle-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 24px;
+            background: #f1f5f9;
+            padding: 16px 24px;
+            border-radius: 14px;
+            margin: 12px 0 16px 0;
+        }
+        .principle-grid .item {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .principle-grid .icon {
+            font-size: 1.2rem;
+        }
+
+        .action-plan {
+            background: #f0f9ff;
+            border-radius: 16px;
+            padding: 8px 0;
+            border: 1px solid #b7d5f0;
+            margin: 16px 0 20px 0;
+        }
+        .action-plan table {
+            min-width: unset;
+            background: transparent;
+        }
+        .action-plan th {
+            background: #dbeafe;
+        }
+        .action-plan td, .action-plan th {
+            padding: 12px 16px;
+        }
+
+        .note-warning {
+            background: #fefce8;
+            border-left: 6px solid #eab308;
+            padding: 18px 24px;
+            border-radius: 12px;
+            margin: 28px 0 10px 0;
+            font-size: 0.95rem;
+            color: #713f12;
+        }
+        .note-warning strong {
+            color: #854d0e;
+        }
+
+        .footer-disclaimer {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 2px solid #e2e8f0;
+            font-size: 0.9rem;
+            color: #475569;
+            text-align: center;
+        }
+        .footer-disclaimer strong {
+            color: #b91c1c;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 24px 18px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .toc-grid {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+            .toc-grid .target {
+                justify-self: start;
+            }
+            .principle-grid {
+                grid-template-columns: 1fr;
+            }
+            .consent-card pre {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* print friendly */
+        @media print {
+            body { background: white; padding: 0.2in; }
+            .container { box-shadow: none; padding: 0.3in; }
+            .badge-draft { background: #f1f1f1; color: #333; border-color: #999; }
+            .container::before { opacity: 0.05; }
+            .disclaimer-box { background: #fafafa; border-left-color: #888; }
+        }
+
+        /* utilities */
+        .text-muted { color: #64748b; font-size: 0.9rem; }
+        .mt-2 { margin-top: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- draft badge -->
+    <div class="badge-draft">📄 ฉบับร่าง (DRAFT TEMPLATE)</div>
+
+    <h1>📘 คู่มือปฏิบัติตาม PDPA<br>สำหรับร้านค้าออนไลน์</h1>
+    <div class="subhead">ฉบับบูรณาการ — Integrated PDPA Compliance Manual for E-Commerce</div>
+
+    <!-- disclaimer -->
+    <div class="disclaimer-box">
+        <strong>⚠️ คำเตือน (Disclaimer):</strong> คู่มือนี้เป็น <strong>template เริ่มต้น</strong> ใช้เพื่อการเรียนรู้และการเตรียมร่างเบื้องต้นเท่านั้น <strong>ไม่ใช่คำปรึกษาทางกฎหมาย</strong> ก่อนนำไปใช้จริง ต้องให้ทนายความหรือที่ปรึกษา PDPA ที่ได้รับใบอนุญาตตรวจสอบ ปรับแก้ให้เหมาะกับธุรกิจเฉพาะ แล้วจึงประกาศใช้ กรุณาแทนที่ <code>[ข้อมูลในวงเล็บ]</code> ทุกแห่งด้วยข้อมูลจริง
+    </div>
+
+    <!-- TOC -->
+    <div class="toc">
+        <h3>🗂️ สารบัญคู่มือ</h3>
+        <div class="toc-grid">
+            <span class="part">ส่วน ก</span>
+            <span>ประกาศความเป็นส่วนตัว (Privacy Notice)</span>
+            <span class="target">ลูกค้า</span>
+
+            <span class="part">ส่วน ข</span>
+            <span>แบบฟอร์มและกระบวนการขอความยินยอม (Consent)</span>
+            <span class="target">พนักงาน/แอดมิน</span>
+
+            <span class="part">ส่วน ค</span>
+            <span>ตารางกำหนดระยะเวลาเก็บและทำลายข้อมูล</span>
+            <span class="target">พนักงาน/IT</span>
+
+            <span class="part">ส่วน ง</span>
+            <span>แนวทางปฏิบัติสำหรับพนักงาน (Data Handling)</span>
+            <span class="target">พนักงานทุกคน</span>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- ส่วน ก -->
+    <!-- ============================================ -->
+    <h2>ส่วน ก — ประกาศความเป็นส่วนตัว (Privacy Notice)</h2>
+    <div class="section-sub">ส่วนนี้ต้องแสดงบนเว็บไซต์ / แอปพลิเคชัน / Link in Bio อย่างเด่นชัด</div>
+
+    <h3>ประกาศเกี่ยวกับการเก็บรวบรวมข้อมูลส่วนบุคคล</h3>
+    <p><strong>ร้าน/บริษัท:</strong> <code>[ชื่อร้านตามทะเบียนพาณิชย์]</code><br>
+    <strong>ปรับปรุงล่าสุด:</strong> <code>[วัน/เดือน/ปี]</code></p>
+
+    <p><strong>เรียน ลูกค้าและผู้ใช้งาน</strong></p>
+    <p>เราขอแจ้งให้ท่านทราบถึงนโยบายการเก็บ ใช้ และเปิดเผยข้อมูลส่วนบุคคลของท่าน ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562</p>
+
+    <h4>1. ข้อมูลที่เราจะเก็บ</h4>
+    <ul>
+        <li><strong>ข้อมูลทั่วไป:</strong> ชื่อ-นามสกุล, เบอร์โทร, อีเมล, ที่อยู่จัดส่ง</li>
+        <li><strong>ข้อมูลการทำธุรกรรม:</strong> รายการสินค้าที่สั่ง, วิธีการชำระเงิน, หลักฐานการโอน/สลิป</li>
+        <li><strong>ข้อมูลการสื่อสาร:</strong> ข้อความ/แชทที่ท่านส่งถึงเรา (ทาง Line, Facebook, เว็บไซต์)</li>
+        <li><strong>ข้อมูลอัตโนมัติ:</strong> คุกกี้, IP Address, พฤติกรรมการใช้งานเว็บไซต์ (หากมีการเก็บ)</li>
+    </ul>
+
+    <h4>2. เราจะใช้ข้อมูลของท่านเพื่ออะไร?</h4>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:55%">วัตถุประสงค์</th>
+                    <th>ฐานกฎหมายตาม PDPA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>จัดส่งสินค้า และยืนยันคำสั่งซื้อ</td>
+                    <td>จำเป็นต่อการปฏิบัติตามสัญญา (มาตรา 24(3))</td>
+                </tr>
+                <tr>
+                    <td>แจ้งสถานะสินค้า / แก้ไขปัญหาการจัดส่ง</td>
+                    <td>จำเป็นต่อการปฏิบัติตามสัญญา</td>
+                </tr>
+                <tr>
+                    <td>ตรวจสอบและป้องกันการทุจริต</td>
+                    <td>ประโยชน์โดยชอบด้วยกฎหมาย (มาตรา 24(5))</td>
+                </tr>
+                <tr>
+                    <td><strong>ส่งข่าวสาร โปรโมชั่น ส่วนลดพิเศษ</strong></td>
+                    <td><strong>ความยินยอมของท่าน (มาตรา 19)</strong> — ต้องกดยินยอมแยกต่างหาก</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4>3. เราเปิดเผยข้อมูลของท่านให้ใครบ้าง?</h4>
+    <ul>
+        <li><strong>บริษัทขนส่ง</strong> (เช่น Kerry Express, Flash Express, ไปรษณีย์ไทย) — เพื่อจัดส่งพัสดุ</li>
+        <li><strong>ผู้ให้บริการชำระเงิน</strong> (ธนาคาร, Payment Gateway) — เพื่อตรวจสอบการโอนเงิน</li>
+        <li><strong>ผู้ให้บริการคลาวด์หรือระบบจัดการร้านค้า</strong> (เช่น Shopify, ระบบ POS) — เฉพาะเท่าที่จำเป็น</li>
+    </ul>
+    <p><em>เราจะไม่ขายหรือให้เช่าข้อมูลส่วนบุคคลของท่านให้แก่บุคคลภายนอก</em></p>
+
+    <h4>4. ท่านมีสิทธิอะไรบ้าง?</h4>
+    <ul>
+        <li><strong>สิทธิเข้าถึง:</strong> ขอดูข้อมูลของท่านที่เราเก็บไว้</li>
+        <li><strong>สิทธิขอแก้ไข:</strong> ขอให้เราแก้ข้อมูลที่ผิด</li>
+        <li><strong>สิทธิขอลบ / ระงับการใช้:</strong> ขอให้เราลบข้อมูลเมื่อพ้นความจำเป็น</li>
+        <li><strong>สิทธิคัดค้าน:</strong> ขอไม่ให้เราใช้ข้อมูลเพื่อการตลาด</li>
+        <li><strong>สิทธิถอนความยินยอม:</strong> ยกเลิกการรับข่าวสารได้ทุกเมื่อ</li>
+    </ul>
+    <p><strong>ใช้สิทธิ์ได้ที่:</strong> <code>[อีเมล / Line OA / เบอร์โทร]</code> (เราจะดำเนินการภายใน 30 วัน)</p>
+
+    <!-- ============================================ -->
+    <!-- ส่วน ข -->
+    <!-- ============================================ -->
+    <h2>ส่วน ข — แบบฟอร์มขอความยินยอมเพื่อการตลาด (Consent Form)</h2>
+    <div class="section-sub">ส่วนนี้ต้องแยกออกจากขั้นตอนสั่งซื้ออย่างชัดเจน</div>
+
+    <h3>ข้อความที่ต้องแสดงบนหน้า Checkout / สมัครสมาชิก</h3>
+
+    <div class="consent-card">
+        <pre>┌─────────────────────────────────────────────────────────────┐
+│  📢 รับข่าวสารและโปรโมชั่นพิเศษ                             │
+│                                                             │
+│  ☐ <strong>ฉันยินยอม</strong> ให้ [ชื่อร้าน] ใช้ข้อมูล (เบอร์โทร, อีเมล)  │
+│    เพื่อส่งข่าวสาร ข้อเสนอพิเศษ และโปรโมชั่นทาง              │
+│    อีเมล / SMS / Line Official Account                      │
+│                                                             │
+│    ท่านสามารถยกเลิกความยินยอมนี้ได้ตลอดเวลา                 │
+│    โดยคลิก "ยกเลิกการรับข่าวสาร" ในอีเมล หรือ               │
+│    แจ้งทาง Line OA / เบอร์โทร [เบอร์ติดต่อ]                 │
+│                                                             │
+│    ⚠️ การยินยอมนี้เป็นไปโดยสมัครใจ ไม่มีผลต่อการสั่งซื้อ    │
+│    หากไม่ยินยอม ท่านยังสั่งซื้อสินค้าได้ตามปกติ              │
+└─────────────────────────────────────────────────────────────┘</pre>
+    </div>
+
+    <h4>หลักการปฏิบัติ (ต้องทำ)</h4>
+    <div class="principle-grid">
+        <div class="item"><span class="icon">✅</span> ไม่ติ๊กถูกไว้ให้ (ต้องเป็น Opt-in)</div>
+        <div class="item"><span class="icon">✅</span> แยก checkbox ออกจากข้อตกลงทั่วไป (ไม่ซ่อนใน T&C)</div>
+        <div class="item"><span class="icon">✅</span> บันทึก วัน-เวลา ที่ลูกค้ากดยินยอมไว้ในระบบ</div>
+        <div class="item"><span class="icon">✅</span> ให้ช่องทางถอนความยินยอมที่ <strong>ง่ายและรวดเร็ว</strong> (เช่น ลิงก์ยกเลิกในทุกอีเมล)</div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- ส่วน ค -->
+    <!-- ============================================ -->
+    <h2>ส่วน ค — ตารางกำหนดระยะเวลาเก็บและทำลายข้อมูล</h2>
+    <div class="section-sub">ส่วนนี้ใช้ภายในองค์กร ต้องแจ้งให้ IT และพนักงานที่เกี่ยวข้องทราบ</div>
+
+    <h3>ระยะเวลาการเก็บรักษาข้อมูลตามประเภท (เริ่มนับจากวันสิ้นสุดธุรกรรม)</h3>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:6%">ลำดับ</th>
+                    <th style="width:24%">ประเภทข้อมูล</th>
+                    <th style="width:16%">ระยะเวลาเก็บ</th>
+                    <th style="width:30%">เหตุผล / ข้อกฎหมายอ้างอิง</th>
+                    <th style="width:24%">การดำเนินการเมื่อครบกำหนด</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>ข้อมูลคำสั่งซื้อ + ที่อยู่จัดส่ง</td>
+                    <td><strong>5 ปี</strong></td>
+                    <td>อายุความทางแพ่ง (ปพพ. มาตรา 193/30) และกฎหมายบัญชี (ต้องเก็บเอกสาร 5 ปี)</td>
+                    <td>ลบออกจากระบบฐานข้อมูล</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>หลักฐานการชำระเงิน (สลิป, ใบเสร็จ)</td>
+                    <td><strong>5 ปี</strong></td>
+                    <td>ตามประมวลรัษฎากร (มาตรา 6/4)</td>
+                    <td>ทำลายไฟล์ + กระดาษต้นฉบับ (ถ้ามี)</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>ประวัติแชท / ข้อความสนทนา</td>
+                    <td><strong>6 เดือน</strong></td>
+                    <td>เพื่อประโยชน์ในการแก้ไขข้อพิพาท (ลดความเสี่ยงข้อมูลรั่วไหล)</td>
+                    <td>ลบหรือทำให้ไม่สามารถระบุตัวตนได้</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>ข้อมูลที่ได้รับความยินยอมเพื่อการตลาด</td>
+                    <td><strong>จนกว่าท่านถอนความยินยอม</strong> หรือ <strong>2 ปี</strong> หากไม่มีการโต้ตอบ</td>
+                    <td>หลัก Data Minimization</td>
+                    <td>ลบออกจากลิสต์ผู้รับข่าวสาร</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>ข้อมูลคุกกี้ / Pixel (ที่ไม่ระบุตัวตน)</td>
+                    <td><strong>ไม่เกิน 1 ปี</strong></td>
+                    <td>ตามแนวปฏิบัติ PDPC</td>
+                    <td>ให้หมดอายุโดยอัตโนมัติ</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4>กระบวนการทำลายข้อมูล (ขั้นตอนปฏิบัติ)</h4>
+    <ol>
+        <li><strong>IT / ผู้ดูแลระบบ</strong> สร้าง <strong>ปฏิทินการทำลายข้อมูล</strong> (เช่น ทุกวันที่ 1 มกราคม และ 1 กรกฎาคม)</li>
+        <li>ตรวจสอบข้อมูลที่ครบกำหนดในฐานข้อมูล</li>
+        <li>ดำเนินการลบแบบ <strong>Secure Deletion</strong> (ไม่สามารถกู้คืนได้)</li>
+        <li>บันทึก <strong>ทะเบียนการทำลายข้อมูล</strong> (Disposal Log) ลงในไฟล์ โดยมี:
+            <ul>
+                <li>วันที่ทำลาย</li>
+                <li>ประเภทข้อมูล</li>
+                <li>ผู้ดำเนินการ + ผู้ตรวจสอบ (ลายเซ็น)</li>
+            </ul>
+        </li>
+    </ol>
+
+    <!-- ============================================ -->
+    <!-- ส่วน ง -->
+    <!-- ============================================ -->
+    <h2>ส่วน ง — แนวทางปฏิบัติสำหรับพนักงาน (Data Handling Guidelines)</h2>
+    <div class="section-sub">ประกาศให้พนักงานทุกคนที่เกี่ยวข้องกับข้อมูลลูกค้า — แอดมิน, พนักงานขาย, บัญชี — รับทราบและปฏิบัติ</div>
+
+    <h3>หลักการ 5 ข้อ ที่พนักงานทุกคนต้องจำ</h3>
+
+    <ol style="list-style-type: decimal; font-weight: 500;">
+        <li style="margin-bottom: 12px;"><strong>เก็บเท่าที่จำเป็น (Need‑to‑Know)</strong>
+            <ul style="font-weight: 400; margin-top: 4px;">
+                <li>ห้ามขอข้อมูลส่วนเกินจากลูกค้า ถ้าไม่จำเป็นต้องใช้ในการจัดส่งหรือติดต่อ</li>
+                <li>เช่น ไม่ขอเลขบัตรประชาชน ถ้าไม่ใช่การทำสัญญาเช่าซื้อหรือประกันภัย</li>
+            </ul>
+        </li>
+        <li style="margin-bottom: 12px;"><strong>จำกัดสิทธิ์การเข้าถึง</strong>
+            <ul style="font-weight: 400; margin-top: 4px;">
+                <li>แอดมิน/พนักงานจะเห็นข้อมูลลูกค้าเฉพาะส่วนที่จำเป็นต่องานของตนเท่านั้น</li>
+                <li>พนักงานบัญชีเห็นแค่ข้อมูลการเงิน พนักงานคลังเห็นแค่ที่อยู่จัดส่ง</li>
+            </ul>
+        </li>
+        <li style="margin-bottom: 12px;"><strong>ห้ามแชร์ข้อมูลออกนอกองค์กร</strong>
+            <ul style="font-weight: 400; margin-top: 4px;">
+                <li>ห้ามส่งข้อมูลลูกค้า (เช่น ไฟล์ Excel, สกรีนแชท) ให้บุคคลภายนอกโดยเด็ดขาด เว้นแต่เป็นบริษัทขนส่งตามกระบวนการปกติ</li>
+            </ul>
+        </li>
+        <li style="margin-bottom: 12px;"><strong>ลบข้อมูลที่ไม่ใช้แล้ว</strong>
+            <ul style="font-weight: 400; margin-top: 4px;">
+                <li>หลังส่งสินค้าและยืนยันการรับเรียบร้อย หากไม่มีข้อพิพาท ให้ลบข้อมูลแชทที่ไม่จำเป็น</li>
+            </ul>
+        </li>
+        <li style="margin-bottom: 4px;"><strong>แจ้งทันทีเมื่อเกิดเหตุผิดปกติ</strong>
+            <ul style="font-weight: 400; margin-top: 4px;">
+                <li>หากสงสัยว่าข้อมูลรั่วไหล ถูกแฮก หรือพนักงานเผลอส่งข้อมูลผิด ให้แจ้ง <code>[ผู้รับผิดชอบ PDPA]</code> ภายใน 24 ชั่วโมง</li>
+            </ul>
+        </li>
+    </ol>
+
+    <!-- ============================================ -->
+    <!-- Action Plan -->
+    <!-- ============================================ -->
+    <h2>🔗 การนำคู่มือนี้ไปใช้จริง (Action Plan)</h2>
+
+    <div class="action-plan">
+        <div class="table-wrap" style="border: none; border-radius: 0; margin: 0;">
+            <table style="min-width: unset;">
+                <thead>
+                    <tr>
+                        <th style="width:10%;">ขั้นตอน</th>
+                        <th style="width:55%;">สิ่งที่ต้องทำ</th>
+                        <th style="width:35%;">ผู้รับผิดชอบ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>แก้ไข <code>[ข้อมูลในวงเล็บ]</code> ทั้งหมดให้เป็นข้อมูลจริง</td>
+                        <td>เจ้าของร้าน</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>นำ <strong>ส่วน ก</strong> ไปใส่บนเว็บไซต์ / เพจ / Link in Bio</td>
+                        <td>นักพัฒนา / แอดมิน</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>นำ <strong>ส่วน ข</strong> (Checkbox) ไปติดตั้งบนหน้า Checkout</td>
+                        <td>นักพัฒนา</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>ประกาศ <strong>ส่วน ค และ ง</strong> ให้พนักงานทุกคนรับทราบ และเซ็นรับทราบ</td>
+                        <td>HR / ผู้จัดการ</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>ส่งคู่มือฉบับนี้ให้ <strong>ทนายความ</strong> ตรวจและรับรองก่อนประกาศใช้จริง</td>
+                        <td>เจ้าของร้าน</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>เผยแพร่และบันทึกวันที่ประกาศใช้</td>
+                        <td>ทุกฝ่าย</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- คำเตือน -->
+    <!-- ============================================ -->
+    <div class="note-warning">
+        <strong>⚠️ คำเตือนสำคัญ (อ่านให้จบ)</strong>
+        <ol style="margin-top: 8px; padding-left: 20px;">
+            <li>คู่มือนี้เป็น <strong>ฉบับร่างกลาง</strong> ที่ครอบคลุมธุรกิจร้านค้าออนไลน์ทั่วไป</li>
+            <li>หากธุรกิจของคุณมี <strong>ข้อมูลอ่อนไหว</strong> (เช่น ประวัติสุขภาพ, ข้อมูลเด็ก, ข้อมูลศาสนา) หรือ <strong>มีฐานลูกค้ามากกว่า 10,000 ราย</strong> ต้องมีมาตรการเพิ่มเติมและต้องจดทะเบียนกับ PDPC</li>
+            <li>ระยะเวลา 5 ปีในส่วน ค ควรตรวจสอบกับทนายด้านภาษีอีกครั้ง เพราะอาจมีการตีความแตกต่างกันในแต่ละประเภทกิจการ</li>
+            <li><strong>ห้ามนำไปปฏิบัติจริง</strong> โดยไม่ผ่านการตรวจสอบจากทนายความที่มีใบอนุญาต</li>
+        </ol>
+    </div>
+
+    <!-- footer -->
+    <div class="footer-disclaimer">
+        <strong>⚠️ เอกสารนี้เป็น template เริ่มต้น — ต้องให้ทนายตรวจก่อนใช้จริง</strong><br>
+        จัดทำโดย  ทนาย คงนคร จันทะคุณ 0955088091 -ไม่ใช่คำปรึกษาทางกฎหมาย
+    </div>
+
+</div>
+
+</body>
+</html>

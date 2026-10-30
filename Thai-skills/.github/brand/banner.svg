@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="Claude Thai Skills · 12 Claude Code skills for everyday Thai tasks">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1220"/><stop offset=".6" stop-color="#111a2e"/><stop offset="1" stop-color="#0d1b2a"/></linearGradient>
+<radialGradient id="gl" cx=".85" cy=".15" r=".6"><stop offset="0" stop-color="#E8906F" stop-opacity=".28"/><stop offset="1" stop-color="#E8906F" stop-opacity="0"/></radialGradient>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#5eead4" stroke-opacity=".06"/></pattern>
+<clipPath id="card"><rect width="1200" height="300" rx="22"/></clipPath>
+</defs>
+<style>text{font-family:Inter, 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans Thai', 'Leelawadee UI', Thonburi, sans-serif}.k{font-size:16px;font-weight:700;letter-spacing:.2em;fill:#E8906F}.t{font-size:52px;font-weight:800;letter-spacing:-1px;fill:#eef2f8}
+.th{font-size:24px;font-weight:600;fill:#cbd5e1}.en{font-size:18px;fill:#8b9bb4}.c{font-size:15px;font-weight:600;fill:#e2e8f0}.u{font-size:13px;fill:#94a3b8}</style>
+<g clip-path="url(#card)"><rect width="1200" height="300" fill="url(#bg)"/><rect width="1200" height="300" fill="url(#gl)"/><rect width="1200" height="300" fill="url(#grid)"/></g>
+<rect x="28" y="42" width="4" height="218" rx="2" fill="#E8906F"/>
+<text class="k" x="52" y="58">CLAUDE CODE</text>
+<text class="t" x="50" y="122">Claude Thai Skills</text>
+<text class="th" x="52" y="166">12 skills ของ Claude Code สำหรับงานภาษาไทย</text>
+<text class="en" x="52" y="198">12 Claude Code skills for everyday Thai tasks</text>
+<rect x="52" y="226" width="138" height="34" rx="17" fill="#ffffff" fill-opacity=".06" stroke="#E8906F" stroke-opacity=".45"/><text x="121" y="249" text-anchor="middle" class="c">Claude Code</text><rect x="199.5" y="226" width="64" height="34" rx="17" fill="#ffffff" fill-opacity=".06" stroke="#E8906F" stroke-opacity=".45"/><text x="232" y="249" text-anchor="middle" class="c">PDPA</text><rect x="273.5" y="226" width="116" height="34" rx="17" fill="#ffffff" fill-opacity=".06" stroke="#E8906F" stroke-opacity=".45"/><text x="332" y="249" text-anchor="middle" class="c">PromptPay</text>
+<text class="u" x="1180" y="284" text-anchor="end">github.com/Boom-Vitt/claude-thai-skills</text>
+</svg>
